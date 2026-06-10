@@ -14,17 +14,6 @@ BayesIRTplot <- function(blavaanobj,
                          dpi = 300)
 {
 
-  # option for suppressing scientific notation
-  options(scipen=999)
-
-  library(blavaan)
-  library(lavaan)
-  library(MCMCvis)
-  library(ggplot2)
-  library(coda)
-  library(dplyr)
-  library(tidyr)
-
   #####################################
   # * Data Pre-processing -----
   #####################################
