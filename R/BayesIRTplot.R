@@ -18,11 +18,11 @@ BayesIRTplot <- function(blavaanobj,
   # * Data Pre-processing -----
   #####################################
   # extract the stanfit object
-  fitted.model.sim.stanfit <- blavInspect(blavaanobj, what = "mcobj")
+  fitted.model.sim.stanfit <- blavaan::blavInspect(blavaanobj, what = "mcobj")
   # convert draws to mcmc.list
-  draws.sim.to.analyze <- MCMCchains(fitted.model.sim.stanfit, mcmc.list = TRUE)
+  draws.sim.to.analyze <- MCMCvis::MCMCchains(fitted.model.sim.stanfit, mcmc.list = TRUE)
   # extract number of items
-  nitems = length(lavNames(blavaanobj, type = "ov"))
+  nitems = length(lavaan::lavNames(blavaanobj, type = "ov"))
 
   # rename parameters
   a_start <- 1 # starting column number for a parameters
@@ -52,12 +52,20 @@ BayesIRTplot <- function(blavaanobj,
   #### reformatting data frame to long format (number of items * number of draws = total rows)
   # long format: for a parameters
   draws_long_a <- draws_df_sim %>%
-    select(draw, starts_with("a_")) %>%
-    pivot_longer(starts_with("a_"), names_to = "label_a", values_to = "a")
+    dplyr::select(draw, tidyselect::starts_with("a_")) %>%
+    tidyr::pivot_longer(
+      cols = -draw,
+      names_to = "label_a",
+      values_to = "a"
+      )
   # long format: for tau parameters
   draws_long_tau <- draws_df_sim %>%
-    select(draw, starts_with("tau_")) %>%
-    pivot_longer(starts_with("tau_"), names_to = "label_tau", values_to = "tau")
+    dplyr::select(draw, tidyselect::starts_with("tau_")) %>%
+    tidyr::pivot_longer(
+      cols = -draw,
+      names_to = "label_tau",
+      values_to = "tau"
+      )
   # merge
   drawsfinalsim <- cbind(draws_long_a, draws_long_tau)
   # add item number
@@ -77,7 +85,7 @@ BayesIRTplot <- function(blavaanobj,
     tau <- pars$tau
 
     for(i in 1:nrow(pars)){
-      prob_correct[[i]] <- pnorm(tau[i], mean = lambda[i]*theta, sd = 1, lower.tail = FALSE) # calculate probability
+      prob_correct[[i]] <- stats::pnorm(tau[i], mean = lambda[i]*theta, sd = 1, lower.tail = FALSE) # calculate probability
     }
     # convert to dataframe
     prob_correct_df <- data.frame(t(sapply(prob_correct, c)))
@@ -90,9 +98,13 @@ BayesIRTplot <- function(blavaanobj,
 
   # convert to long format
   # each row is for one item, one draw, one theta value and the corresponding probability of correct
-  draws_theta <- prob_correct_all %>% group_by(draw) %>%
-    select(draw, itemnum, starts_with("X")) %>%
-    pivot_longer(starts_with("X"), names_to = "Theta_label", values_to = "p")
+  draws_theta <- prob_correct_all %>%
+    dplyr::select(draw, itemnum, tidyselect::starts_with("X")) %>%
+    tidyr::pivot_longer(
+      cols = -c(draw, itemnum),
+      names_to = "Theta_label",
+      values_to = "p"
+      )
   # theta values
   draws_theta$theta <- rep(seq(-6, 6, 0.2), length.out = nrow(draws_theta))
   # drop column
@@ -142,59 +154,77 @@ BayesIRTplot <- function(blavaanobj,
   # summary by item
   # mean, IQR of tau parameter across draws
   sum_by_item <- draws_theta_final %>%
-    expand(nesting(draw, itemnum, tau)) %>% # remove duplicated rows
-    group_by(itemnum) %>%
-    summarize(mean_tau = mean(tau),
-              q1 = quantile(tau, probs = 0.25), #Q1
-              q2 = quantile(tau, probs = 0.5), #Median
-              q3 = quantile(tau, probs = 0.75), #Q3
-              ymin   = q1 - 1.5 * IQR(tau),
-              ymax   = q3 + 1.5 * IQR(tau)
-    ) %>% ungroup()
+    dplyr::distinct(draw, itemnum, tau) %>% # remove duplicated rows
+    dplyr::group_by(itemnum) %>%
+    dplyr::summarize(
+      mean_tau = mean(tau),
+      q1 = stats::quantile(tau, probs = 0.25), #Q1
+      q2 = stats::quantile(tau, probs = 0.5), #Median
+      q3 = stats::quantile(tau, probs = 0.75), #Q3
+      ymin   = q1 - 1.5 * stats::IQR(tau),
+      ymax   = q3 + 1.5 * stats::IQR(tau),
+      .groups = "drop"
+    )
+
 
   # summary by item and theta
   # mean probability of correct across draws
   # mean item information across draws
   sum_by_item_theta <- draws_theta_final %>%
-    expand(nesting(draw, itemnum, theta, p, i)) %>%
-    group_by(itemnum, theta) %>%
-    summarise(p = mean(p),
-              i = mean(i), .groups = "drop")
+    dplyr::group_by(itemnum, theta) %>%
+    dplyr::summarise(
+      p = mean(p),
+      i = mean(i),
+      .groups = "drop"
+      )
 
   # summary by theta and draw
   # calculate test information and expected total score
   sum_by_draw_theta <- draws_theta_final %>%
-    expand(nesting(draw, itemnum, theta, i, p)) %>%
-    group_by(theta, draw) %>%
-    summarise(test_i = sum(i),
-              test_p = sum(p), .groups = "drop")
+    dplyr::group_by(theta, draw) %>%
+    dplyr::summarise(
+      test_i = sum(i),
+      test_p = sum(p),
+      .groups = "drop"
+      )
 
   # summary by theta
   # mean test information across draws
   sum_by_theta <- sum_by_draw_theta %>%
-    group_by(theta) %>%
-    summarise(test_i = mean(test_i),
-              test_p = mean(test_p)) %>% ungroup()
+    dplyr::group_by(theta) %>%
+    dplyr::summarise(
+      test_i = mean(test_i),
+      test_p = mean(test_p),
+      .groups = "drop"
+      )
 
   # summary by draw
   # reliability for each draw
   sum_by_draw <- sum_by_draw_theta %>%
-    mutate(rel_by_theta = test_i/(test_i+1)) %>%
-    group_by(draw) %>%
-    mutate(weight = dnorm(theta),
-           rel_with_weight = (rel_by_theta*weight/sum(weight, na.rm = TRUE)),
-           rel = sum(rel_with_weight, na.rm = TRUE)) %>% slice(1) %>%
-    select(draw, rel) %>% ungroup()
+    dplyr::mutate(rel_by_theta = test_i/(test_i+1)) %>%
+    dplyr::group_by(draw) %>%
+    dplyr::mutate(
+      weight = stats::dnorm(theta),
+      rel_with_weight = rel_by_theta * weight/sum(weight, na.rm = TRUE)
+    ) %>%
+    dplyr::summarise(
+      rel = sum(rel_with_weight, na.rm = TRUE),
+      .groups = "drop"
+    )
 
   # reliability across draws
   # for each theta, first calculate mean test information across all draws, then calculate reliability
   # then add up across theta based on weights
   final_rel <- sum_by_theta %>%
-    mutate(rel_by_theta = test_i/(test_i+1)) %>%
-    mutate(weight = dnorm(theta))  %>%
-    mutate(rel_with_weight = (rel_by_theta*weight/sum(weight, na.rm = TRUE)))%>%
-    mutate(rel = sum(rel_with_weight, na.rm = TRUE)) %>% slice(1) %>%
-    pull(rel)
+    dplyr::mutate(
+      rel_by_theta = test_i/(test_i+1),
+      weight = stats::dnorm(theta),
+      rel_with_weight = rel_by_theta * weight/sum(weight, na.rm = TRUE)
+    ) %>%
+    dplyr::summarise(
+     rel = sum(rel_with_weight, na.rm = TRUE)
+    ) %>%
+    dplyr::pull(rel)
 
 
   ################################
@@ -212,7 +242,7 @@ BayesIRTplot <- function(blavaanobj,
       }
 
     sum_by_item_IPM <- sum_by_item %>%
-      filter(itemnum %in% item_list_IPM)
+      dplyr::filter(itemnum %in% item_list_IPM)
 
     # Yaxis two digits
     scaleFUN <- function(x) sprintf("%.2f", x)
@@ -226,7 +256,8 @@ BayesIRTplot <- function(blavaanobj,
         upper = q3,
         ymin = ymin,
         ymax = ymax),
-        stat = "identity") + theme_bw(base_size = 13) +
+        stat = "identity") +
+      theme_bw(base_size = 13) +
       theme(axis.text.x = element_text(angle = 45, hjust = 1),
             legend.position = "none", panel.grid.major = element_blank(),
             panel.grid.minor = element_blank()) +
@@ -385,7 +416,7 @@ BayesIRTplot <- function(blavaanobj,
 
         ICCplot_overlay <- ggplot() +
           geom_line(
-            data = sum_by_item_theta %>% filter(itemnum %in% item_list_ICC_IIC),
+            data = sum_by_item_theta %>% dplyr::filter(itemnum %in% item_list_ICC_IIC),
             aes(x = theta, y = p,
                 group = item_label,
                 colour = item_label),
@@ -404,7 +435,7 @@ BayesIRTplot <- function(blavaanobj,
 
         ICCplot_overlay <- ggplot() +
           geom_line(
-            data = sum_by_item_theta %>% filter(itemnum %in% item_list_ICC_IIC),
+            data = sum_by_item_theta %>% dplyr::filter(itemnum %in% item_list_ICC_IIC),
             aes(x = theta, y = p,
                 group = item_label,
                 linetype = item_label),
@@ -546,7 +577,7 @@ BayesIRTplot <- function(blavaanobj,
 
         IICplot_overlay <- ggplot() +
           geom_line(
-            data = sum_by_item_theta %>% filter(itemnum %in% item_list_ICC_IIC),
+            data = sum_by_item_theta %>% dplyr::filter(itemnum %in% item_list_ICC_IIC),
             aes(x = theta, y = i,
                 group = item_label,
                 colour = item_label),
@@ -565,7 +596,7 @@ BayesIRTplot <- function(blavaanobj,
 
         IICplot_overlay <- ggplot() +
           geom_line(
-            data = sum_by_item_theta %>% filter(itemnum %in% item_list_ICC_IIC),
+            data = sum_by_item_theta %>% dplyr::filter(itemnum %in% item_list_ICC_IIC),
             aes(x = theta, y = i,
                 group = item_label,
                 linetype = item_label),
