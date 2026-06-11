@@ -1,11 +1,29 @@
 Package: BayesIRTplot
-Title: What the Package Does (One Line, Title Case)
+Title: Generate Plots for Bayesian IRT Analysis
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Authors@R: c(
+    person("Karina", "Cahill", email = "karina.cahill@asu.edu", role = c("cre", "aut")),
+    person("Roy", "Levy", email = "Roy.Levy@asu.edu", role = c("aut")),
+    person("Yadi", "Li", email = "yadili@asu.edu", role = c("aut"))
+    )
+Description: Use for generating plots for Bayesian IRT analysis conducted in blavaan. 
+    The following types of plots are available: 
+    Item-Person Map, Item Characteristic Curve, Item Information Curve, Test Characteristic Curve, Test Information Curve, 
+    Reliability Plot.
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.0.0
+Imports: 
+    blavaan,
+    coda,
+    dplyr,
+    ggplot2,
+    lavaan,
+    MCMCvis,
+    scales,
+    stats,
+    tidyr,
+    tidyselect,
+    utils
+Depends: R (>= 4.1.0)
