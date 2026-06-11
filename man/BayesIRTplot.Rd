@@ -22,7 +22,7 @@ BayesIRTplot(
 )
 }
 \arguments{
-\item{blavaanobj}{A fitted IRT model from blavaan.}
+\item{blavaanobj}{A fitted IRT model from \code{blavaan}.}
 
 \item{IRTplot}{Type of IRT plot to generate. Can be one or more of the following:
 \itemize{
@@ -36,15 +36,14 @@ BayesIRTplot(
 }}
 
 \item{DrawsK}{Controls the number of draws being plotted as separate lines in ICC, IIC, TCC and TIC.
-Default to 50. Note that in those plots, the mean probability or the mean information are calculated using all draws from blavaan fitted object
+Default to 50. Note that in those plots, the mean probability or the mean information are calculated using all draws from \code{blavaan} fitted object
 regardless of how many draws are plotted as separate lines. This does not affect IPM and REL plots which always use all draws.}
 
-\item{items_IPM}{A list of items which will be included in IPM. If not provided, all items will be plotted (if IRTplot = “ALL” or “IPM”).}
+\item{items_IPM}{A list of items which will be included in IPM. By default, all items will be plotted.}
 
-\item{items_ICC_IIC}{A list of items for which ICC and IIC will be generated.
-If not provided, ICC and IIC of all items will be generated (if IRTplot = “ALL” or “ICC” or “IIC”).}
+\item{items_ICC_IIC}{A list of items for which ICC and IIC will be generated. By default, ICC and IIC of all items will be generated.}
 
-\item{item_names_ICC_IIC}{A list of item names to be displayed on ICC and IIC (optional). Should be of the same length as items_ICC_IIC.}
+\item{item_names_ICC_IIC}{A list of item names to be displayed on ICC and IIC (optional). Should be of the same length as \code{items_ICC_IIC}.}
 
 \item{ICCplot_option}{Type of ICC plot to generate. Can be one or more of the following:
 \itemize{
@@ -74,23 +73,23 @@ Note that in overlaid IIC plot, only the mean item information across all draws 
 \item line: different items are plotted in different line types
 }
 
-Note that if overlay_style = “line”, a maximum of 13 items can be plotted}
+Note that if \code{overlay_style = "line"}, a maximum of 13 items can be plotted}
 
 \item{save_plots}{Should plots be saved? Logical; default to FALSE.}
 
-\item{save_dir}{If save_plots = TRUE, by default, the plots will be saved in the current working directory.
-A relative path within the current working directory may be provided in save_dir.}
+\item{save_dir}{Directory where plots will be saved when \code{save_plots = TRUE}. Defaults to the current working directory returned by \code{getwd()}.
+A relative path within the current working directory may also be provided.}
 
-\item{dpi}{If save_plots = TRUE, specifies the resolution (dots per inch) used when saving the plot. Default to 300.}
+\item{dpi}{If \code{save_plots = TRUE}, specifies the resolution (dots per inch) used when saving the plot. Default to 300.}
 }
 \value{
 A list of ggplot objects corresponding to the requested IRT plots.
 }
 \description{
-Generate plots for Bayesian IRT analysis conducted in blavaan. BayesIRTplot() reads in a fitted IRT model from blavaan.
+Generate plots for Bayesian IRT analysis conducted in \code{blavaan}. \code{BayesIRTplot()} reads in a fitted IRT model from \code{blavaan}.
 The following types of plots are available: Item-Person Map, Item Characteristic Curve, Item Information Curve,
 Test Characteristic Curve, Test Information Curve, Reliability Plot.
 }
 \examples{
-BayesIRTplot(fitted.model, save_plots = TRUE)
+BayesIRTplot(tma.IRT.fitted.model)
 }
