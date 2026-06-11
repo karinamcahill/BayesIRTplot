@@ -27,3 +27,5 @@ Imports:
     tidyselect,
     utils
 Depends: R (>= 4.1.0)
+LazyData: true
+LazyDataCompression: xz
