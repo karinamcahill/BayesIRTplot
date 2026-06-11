@@ -1,10 +1,10 @@
 #' Generate plots for Bayesian IRT analysis
 #'
-#' Generate plots for Bayesian IRT analysis conducted in blavaan. BayesIRTplot() reads in a fitted IRT model from blavaan.
+#' Generate plots for Bayesian IRT analysis conducted in `blavaan`. `BayesIRTplot()` reads in a fitted IRT model from `blavaan`.
 #' The following types of plots are available: Item-Person Map, Item Characteristic Curve, Item Information Curve,
 #' Test Characteristic Curve, Test Information Curve, Reliability Plot.
 #'
-#' @param blavaanobj A fitted IRT model from blavaan.
+#' @param blavaanobj A fitted IRT model from `blavaan`.
 #' @param IRTplot Type of IRT plot to generate. Can be one or more of the following:
 #'
 #'   * IPM: Item-Person Map
@@ -15,12 +15,11 @@
 #'   * REL: Reliability Plot
 #'   * ALL (default): All plots listed above
 #' @param DrawsK Controls the number of draws being plotted as separate lines in ICC, IIC, TCC and TIC.
-#'   Default to 50. Note that in those plots, the mean probability or the mean information are calculated using all draws from blavaan fitted object
+#'   Default to 50. Note that in those plots, the mean probability or the mean information are calculated using all draws from `blavaan` fitted object
 #'   regardless of how many draws are plotted as separate lines. This does not affect IPM and REL plots which always use all draws.
-#' @param items_IPM A list of items which will be included in IPM. If not provided, all items will be plotted (if IRTplot = “ALL” or “IPM”).
-#' @param items_ICC_IIC A list of items for which ICC and IIC will be generated.
-#'   If not provided, ICC and IIC of all items will be generated (if IRTplot = “ALL” or “ICC” or “IIC”).
-#' @param item_names_ICC_IIC A list of item names to be displayed on ICC and IIC (optional). Should be of the same length as items_ICC_IIC.
+#' @param items_IPM A list of items which will be included in IPM. By default, all items will be plotted.
+#' @param items_ICC_IIC A list of items for which ICC and IIC will be generated. By default, ICC and IIC of all items will be generated.
+#' @param item_names_ICC_IIC A list of item names to be displayed on ICC and IIC (optional). Should be of the same length as `items_ICC_IIC`.
 #' @param ICCplot_option Type of ICC plot to generate. Can be one or more of the following:
 #'
 #'   * separate (default): each item in a separate plot
@@ -42,13 +41,13 @@
 #'   * color (default): different items are plotted in different colors
 #'   * line: different items are plotted in different line types
 #'
-#'   Note that if overlay_style = “line”, a maximum of 13 items can be plotted
+#'   Note that if `overlay_style = "line"`, a maximum of 13 items can be plotted
 #' @param save_plots Should plots be saved? Logical; default to FALSE.
-#' @param save_dir If save_plots = TRUE, by default, the plots will be saved in the current working directory.
-#'   A relative path within the current working directory may be provided in save_dir.
-#' @param dpi If save_plots = TRUE, specifies the resolution (dots per inch) used when saving the plot. Default to 300.
+#' @param save_dir Directory where plots will be saved when `save_plots = TRUE`. Defaults to the current working directory returned by `getwd()`.
+#'   A relative path within the current working directory may also be provided.
+#' @param dpi If `save_plots = TRUE`, specifies the resolution (dots per inch) used when saving the plot. Default to 300.
 #' @returns A list of ggplot objects corresponding to the requested IRT plots.
-#' @examples BayesIRTplot(fitted.model, save_plots = TRUE)
+#' @examples BayesIRTplot(tma.IRT.fitted.model)
 #' @export
 BayesIRTplot <- function(blavaanobj,
                          IRTplot = "ALL",
@@ -317,7 +316,7 @@ BayesIRTplot <- function(blavaanobj,
       scale_y_continuous(labels = scaleFUN, position = "right", expand = expansion(mult = 0.05),
                          breaks = scales::breaks_pretty(n = 4)) +
       scale_x_discrete(limits = as.character(sort(unique(sum_by_item_IPM$itemnum)))) +
-      theme(text = element_text(family = "Times New Roman", size = 12))
+      theme(text = element_text(family = "serif", size = 12))
 
     print(IPMplot)
     plots$IPMplot <- IPMplot
@@ -384,7 +383,7 @@ BayesIRTplot <- function(blavaanobj,
           geom_line(data = subset(sum_by_item_theta, itemnum == item_plot),
                     aes(x = theta, y = p), colour = "black", linetype = "solid", linewidth = 2) +
           theme_classic() +
-          theme(legend.position = "none", text = element_text(family = "Times New Roman", size = 12))
+          theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
         print(ICCplot)
         plots[[paste0("ICCplot_item", item_plot)]] <- ICCplot
@@ -441,7 +440,7 @@ BayesIRTplot <- function(blavaanobj,
             y = expression(italic(p)(y == 1))
           ) +
           theme_classic() +
-          theme(legend.position = "none", text = element_text(family = "Times New Roman", size = 12))
+          theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
         print(ICCplot_panel)
         plots[[paste0("ICCplot_panel", g)]] <- ICCplot_panel
@@ -478,7 +477,7 @@ BayesIRTplot <- function(blavaanobj,
                x = expression(theta),
                y = expression(italic(p)(y==1))) +
           theme_classic() +
-          theme(text = element_text(family = "Times New Roman", size = 12)) +
+          theme(text = element_text(family = "serif", size = 12)) +
           scale_color_hue(l = 70, c = 60)
       }
 
@@ -497,7 +496,7 @@ BayesIRTplot <- function(blavaanobj,
                x = expression(theta),
                y = expression(italic(p)(y==1))) +
           theme_classic() +
-          theme(text = element_text(family = "Times New Roman", size = 12))
+          theme(text = element_text(family = "serif", size = 12))
       }
       plots$ICCplot_overlay <- ICCplot_overlay
       print(ICCplot_overlay)
@@ -546,7 +545,7 @@ BayesIRTplot <- function(blavaanobj,
           geom_line(data = subset(sum_by_item_theta, itemnum == item_plot),
                     aes(x = theta, y = i), colour = "black", linetype = "solid", linewidth = 2) +
           theme_classic() +
-          theme(legend.position = "none", text = element_text(family = "Times New Roman", size = 12))
+          theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
         print(IICplot)
         plots[[paste0("IICplot_item", item_plot)]] <- IICplot
@@ -602,7 +601,7 @@ BayesIRTplot <- function(blavaanobj,
             x = expression(theta),
             y = "Information") +
           theme_classic() +
-          theme(legend.position = "none", text = element_text(family = "Times New Roman", size = 12))
+          theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
         print(IICplot_panel)
         plots[[paste0("IICplot_panel", g)]] <- IICplot_panel
@@ -639,7 +638,7 @@ BayesIRTplot <- function(blavaanobj,
                x = expression(theta),
                y = "Information") +
           theme_classic() +
-          theme(text = element_text(family = "Times New Roman", size = 12)) +
+          theme(text = element_text(family = "serif", size = 12)) +
           scale_color_hue(l = 70, c = 60)
       }
 
@@ -658,7 +657,7 @@ BayesIRTplot <- function(blavaanobj,
                x = expression(theta),
                y = "Information") +
           theme_classic() +
-          theme(text = element_text(family = "Times New Roman", size = 12))
+          theme(text = element_text(family = "serif", size = 12))
       }
       plots$IICplot_overlay <- IICplot_overlay
       print(IICplot_overlay)
@@ -683,7 +682,7 @@ BayesIRTplot <- function(blavaanobj,
            y = "Expected Score") +
       geom_line(data = sum_by_theta, aes(x = theta, y = test_p), colour = "black", linetype = "solid", linewidth = 2) +
       theme_classic() +
-      theme(legend.position = "none", text = element_text(family = "Times New Roman", size = 12))
+      theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
     print(TCCplot)
     plots$TCCplot <- TCCplot
@@ -705,7 +704,7 @@ BayesIRTplot <- function(blavaanobj,
            y = "Information") +
       geom_line(data = sum_by_theta, aes(x = theta, y = test_i), colour = "black", linetype = "solid", linewidth = 2) +
       theme_classic() +
-      theme(legend.position = "none", text = element_text(family = "Times New Roman", size = 12))
+      theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
     print(TICplot)
     plots$TICplot <- TICplot
@@ -724,7 +723,7 @@ BayesIRTplot <- function(blavaanobj,
       labs(title = "Marginal Reliability Plot",
            x = "Reliability") +
       geom_vline(xintercept = final_rel, color = "black", linetype = "longdash", linewidth = 1) +
-      theme(text = element_text(family = "Times New Roman", size = 12),
+      theme(text = element_text(family = "serif", size = 12),
             axis.text.y = element_blank(),      #numbers
             axis.ticks.y = element_blank(),     #ticks
             axis.title.y = element_blank())     #axis title
