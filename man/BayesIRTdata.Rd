@@ -10,8 +10,11 @@ BayesIRTdata(blavaanobj)
 \item{blavaanobj}{A fitted IRT model from \code{blavaan}.}
 }
 \value{
-A list of datasets and summary statistics used for plotting.
+A list of model information, datasets, and summary statistics used for plotting.
 \describe{
+\item{nitems}{
+Number of items in the fitted model.
+}
 \item{draws_by_item_theta}{
 Posterior draws of item parameter estimates, probabilities of a correct response, and item information across theta value. Used in ICC and IIC.
 }
