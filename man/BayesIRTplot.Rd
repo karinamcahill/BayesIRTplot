@@ -84,6 +84,20 @@ A relative path within the current working directory may also be provided.}
 }
 \value{
 A list of ggplot objects corresponding to the requested IRT plots.
+
+Depending on the requested plots and plotting options, the list may contain:
+\itemize{
+\item IPMplot: Item-Person Map
+\item ICCplot_item1, ICCplot_item2, ...: Item Characteristic Curves by item
+\item ICCplot_panel1, ICCplot_panel2, ...: Item Characteristic Curves by panel
+\item ICCplot_overlay: Item Characteristic Curves overlaid
+\item IICplot_item1, IICplot_item2, ...: Item Information Curves by item
+\item IICplot_panel1, IICplot_panel2, ...: Item Information Curves by panel
+\item IICplot_overlay: Item Information Curves overlaid
+\item TCCplot: Test Characteristic Curve
+\item TICplot: Test Information Curve
+\item RELplot: Reliability Plot
+}
 }
 \description{
 Generate plots for Bayesian IRT analysis conducted in \code{blavaan}. \code{BayesIRTplot()} reads in a fitted IRT model from \code{blavaan}.
@@ -92,4 +106,9 @@ Test Characteristic Curve, Test Information Curve, Reliability Plot.
 }
 \examples{
 BayesIRTplot(tma.IRT.fitted.model)
+
+# Access individual plot
+plots <- BayesIRTplot(tma.IRT.fitted.model)
+plots$IPMplot
+
 }
