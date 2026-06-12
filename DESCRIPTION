@@ -24,8 +24,7 @@ Imports:
     scales,
     stats,
     tidyr,
-    tidyselect,
-    utils
+    tidyselect
 Depends: R (>= 4.1.0)
 LazyData: true
 LazyDataCompression: xz

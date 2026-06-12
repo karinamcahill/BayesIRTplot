@@ -2,4 +2,3 @@
 
 export(BayesIRTplot)
 import(ggplot2)
-importFrom(utils,globalVariables)
