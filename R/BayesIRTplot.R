@@ -47,7 +47,26 @@
 #'   A relative path within the current working directory may also be provided.
 #' @param dpi If `save_plots = TRUE`, specifies the resolution (dots per inch) used when saving the plot. Default to 300.
 #' @returns A list of ggplot objects corresponding to the requested IRT plots.
-#' @examples BayesIRTplot(tma.IRT.fitted.model)
+#'
+#'   Depending on the requested plots and plotting options, the list may contain:
+#'   * IPMplot: Item-Person Map
+#'   * ICCplot_item1, ICCplot_item2, ...: Item Characteristic Curves by item
+#'   * ICCplot_panel1, ICCplot_panel2, ...: Item Characteristic Curves by panel
+#'   * ICCplot_overlay: Item Characteristic Curves overlaid
+#'   * IICplot_item1, IICplot_item2, ...: Item Information Curves by item
+#'   * IICplot_panel1, IICplot_panel2, ...: Item Information Curves by panel
+#'   * IICplot_overlay: Item Information Curves overlaid
+#'   * TCCplot: Test Characteristic Curve
+#'   * TICplot: Test Information Curve
+#'   * RELplot: Reliability Plot
+#'
+#' @examples
+#' BayesIRTplot(tma.IRT.fitted.model)
+#'
+#' # Access individual plot
+#' plots <- BayesIRTplot(tma.IRT.fitted.model)
+#' plots$IPMplot
+#'
 #' @export
 BayesIRTplot <- function(blavaanobj,
                          IRTplot = "ALL",
@@ -736,9 +755,6 @@ BayesIRTplot <- function(blavaanobj,
 
     print(RELplot)
     plots$RELplot <- RELplot
-
-    # mean reliability value
-    print(paste0("Reliability: ", sprintf("%.3f", final_rel)))
   }
 
   #### Save plots to local directory
@@ -756,5 +772,5 @@ BayesIRTplot <- function(blavaanobj,
     }
   }
 
-
+  return(invisible(plots))
 }
