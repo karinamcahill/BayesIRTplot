@@ -715,10 +715,16 @@ BayesIRTplot <- function(blavaanobj,
   ############################
   if (REL == 1){
 
-    RELplot <- ggplot(sum_by_draw, aes(x = rel, color = as.factor(draw))) +
-      geom_histogram() +
+    RELplot <- ggplot(sum_by_draw, aes(x = rel)) +
+      geom_histogram(
+        binwidth = 0.01,
+        fill = "grey40",
+        color = "white"
+      ) +
       scale_x_continuous(breaks = seq(0, 1, by = .01)) +
-      theme_classic() + theme(legend.position = "none") +
+      scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
+      theme_classic() +
+      theme(legend.position = "none") +
       scale_colour_grey() +
       labs(title = "Marginal Reliability Plot",
            x = "Reliability") +
