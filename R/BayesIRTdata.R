@@ -6,8 +6,11 @@
 #'
 #' @param blavaanobj A fitted IRT model from `blavaan`.
 #'
-#' @returns A list of datasets and summary statistics used for plotting.
+#' @returns A list of model information, datasets, and summary statistics used for plotting.
 #' \describe{
+#'   \item{nitems}{
+#'   Number of items in the fitted model.
+#'   }
 #'   \item{draws_by_item_theta}{
 #'   Posterior draws of item parameter estimates, probabilities of a correct response, and item information across theta value. Used in ICC and IIC.
 #'   }
@@ -157,8 +160,8 @@ BayesIRTdata <- function(blavaanobj)
       q1_tau = stats::quantile(tau, probs = 0.25), #Q1
       q2_tau = stats::quantile(tau, probs = 0.5), #Median
       q3_tau = stats::quantile(tau, probs = 0.75), #Q3
-      min_tau   = q1 - 1.5 * stats::IQR(tau),
-      max_tau   = q3 + 1.5 * stats::IQR(tau),
+      min_tau   = q1_tau - 1.5 * stats::IQR(tau),
+      max_tau   = q3_tau + 1.5 * stats::IQR(tau),
       .groups = "drop"
     )
 
@@ -222,6 +225,7 @@ BayesIRTdata <- function(blavaanobj)
     dplyr::pull(rel)
 
     return(list(
+      nitems = nitems,
       draws_by_item_theta = draws_by_item_theta,
       summary_by_item = summary_by_item,
       summary_by_item_theta = summary_by_item_theta,
