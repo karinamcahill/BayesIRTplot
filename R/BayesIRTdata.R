@@ -134,14 +134,14 @@ BayesIRTdata <- function(blavaanobj)
 
   #################
   # merge with draws of parameter values
-  draws_theta_final <- merge(draws_theta, drawsfinalsim, by = c("draw","itemnum"))
+  draws_by_item_theta <- merge(draws_theta, drawsfinalsim, by = c("draw","itemnum"))
   # transformation of a parameter (from probit to logit)
-  draws_theta_final$a <- draws_theta_final$a*1.702
+  draws_by_item_theta$a <- draws_by_item_theta$a*1.702
   # item information
-  draws_theta_final$i <- with(draws_theta_final, a^2 * p * (1 - p))
+  draws_by_item_theta$i <- with(draws_by_item_theta, a^2 * p * (1 - p))
   # reorder it by draw and itemnum
-  draws_theta_final <- draws_theta_final[order(draws_theta_final$draw,
-                                               draws_theta_final$itemnum), ]
+  draws_by_item_theta <- draws_by_item_theta[order(draws_by_item_theta$draw,
+                                                   draws_by_item_theta$itemnum), ]
 
 
   #####################
@@ -149,7 +149,7 @@ BayesIRTdata <- function(blavaanobj)
 
   # summary by item
   # mean, IQR of tau parameter across draws
-  sum_by_item <- draws_theta_final |>
+  summary_by_item <- draws_by_item_theta |>
     dplyr::distinct(draw, itemnum, tau) |> # remove duplicated rows
     dplyr::group_by(itemnum) |>
     dplyr::summarize(
@@ -165,7 +165,7 @@ BayesIRTdata <- function(blavaanobj)
   # summary by item and theta
   # mean probability of correct across draws
   # mean item information across draws
-  sum_by_item_theta <- draws_theta_final |>
+  summary_by_item_theta <- draws_by_item_theta |>
     dplyr::group_by(itemnum, theta) |>
     dplyr::summarise(
       p = mean(p),
@@ -175,7 +175,7 @@ BayesIRTdata <- function(blavaanobj)
 
   # summary by theta and draw
   # calculate test information and expected total score
-  sum_by_draw_theta <- draws_theta_final |>
+  summary_by_draw_theta <- draws_by_item_theta |>
     dplyr::group_by(theta, draw) |>
     dplyr::summarise(
       test_i = sum(i),
@@ -185,7 +185,7 @@ BayesIRTdata <- function(blavaanobj)
 
   # summary by theta
   # mean test information across draws
-  sum_by_theta <- sum_by_draw_theta |>
+  summary_by_theta <- summary_by_draw_theta |>
     dplyr::group_by(theta) |>
     dplyr::summarise(
       test_i = mean(test_i),
@@ -195,7 +195,7 @@ BayesIRTdata <- function(blavaanobj)
 
   # summary by draw
   # reliability for each draw
-  sum_by_draw <- sum_by_draw_theta |>
+  summary_by_draw <- summary_by_draw_theta |>
     dplyr::mutate(rel_by_theta = test_i/(test_i+1)) |>
     dplyr::group_by(draw) |>
     dplyr::mutate(
@@ -210,7 +210,7 @@ BayesIRTdata <- function(blavaanobj)
   # reliability across draws
   # for each theta, first calculate mean test information across all draws, then calculate reliability
   # then add up across theta based on weights
-  final_rel <- sum_by_theta |>
+  mean_reliability <- summary_by_theta |>
     dplyr::mutate(
       rel_by_theta = test_i/(test_i+1),
       weight = stats::dnorm(theta),
@@ -222,12 +222,12 @@ BayesIRTdata <- function(blavaanobj)
     dplyr::pull(rel)
 
     return(list(
-      draws_by_item_theta = draws_theta_final,
-      summary_by_item = sum_by_item,
-      summary_by_item_theta = sum_by_item_theta,
-      summary_by_draw_theta = sum_by_draw_theta,
-      summary_by_theta = sum_by_theta,
-      summary_by_draw = sum_by_draw,
-      mean_reliability = final_rel
+      draws_by_item_theta = draws_by_item_theta,
+      summary_by_item = summary_by_item,
+      summary_by_item_theta = summary_by_item_theta,
+      summary_by_draw_theta = summary_by_draw_theta,
+      summary_by_theta = summary_by_theta,
+      summary_by_draw = summary_by_draw,
+      mean_reliability = mean_reliability
     ))
 }
