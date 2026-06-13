@@ -2,7 +2,7 @@
 % Please edit documentation in R/BayesIRTdata.R
 \name{BayesIRTdata}
 \alias{BayesIRTdata}
-\title{Generate plotting data for Bayesian IRT analysis}
+\title{Generate plotting data for Bayesian item response theory models}
 \usage{
 BayesIRTdata(blavaanobj)
 }
@@ -39,7 +39,7 @@ Mean marginal reliability across posterior draws. Used in REL.
 }
 }
 \description{
-Generate plotting data for Bayesian IRT analysis conducted in \code{blavaan}. \code{BayesIRTdata()} reads in a fitted IRT model from \code{blavaan}.
+Generate plotting data for Bayesian item response theory (IRT) models fitted in \code{blavaan}. \code{BayesIRTdata()} reads in a fitted IRT model from \code{blavaan}.
 The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
 Test Characteristic Curve (TCC), Test Information Curve (TIC), Reliability Plot (REL).
 }

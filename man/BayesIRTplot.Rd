@@ -2,7 +2,7 @@
 % Please edit documentation in R/BayesIRTplot.R
 \name{BayesIRTplot}
 \alias{BayesIRTplot}
-\title{Generate plots for Bayesian IRT analysis}
+\title{Generate plots for Bayesian item response theory models}
 \usage{
 BayesIRTplot(
   blavaanobj,
@@ -100,9 +100,9 @@ Depending on the requested plots and plotting options, the list may contain:
 }
 }
 \description{
-Generate plots for Bayesian IRT analysis conducted in \code{blavaan}. \code{BayesIRTplot()} reads in a fitted IRT model from \code{blavaan}.
-The following types of plots are available: Item-Person Map(IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
-Test Characteristic Curve (TCC), Test Information Curve (TIC), Reliability Plot (REL).
+Generate plots for Bayesian item response theory (IRT) models fitted in \code{blavaan}. \code{BayesIRTplot()} reads in a fitted IRT model from \code{blavaan}.
+Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
+Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
 }
 \examples{
 BayesIRTplot(tma.IRT.fitted.model)
