@@ -1,15 +1,14 @@
 Package: BayesIRTplot
-Title: Generate Plots for Bayesian IRT Analysis
-Version: 0.0.0.9000
+Title: Generate Plots for Bayesian Item Response Theory Models
+Version: 0.1.0.9000
 Authors@R: c(
     person("Karina", "Cahill", email = "karina.cahill@asu.edu", role = c("cre", "aut")),
     person("Roy", "Levy", email = "Roy.Levy@asu.edu", role = c("aut")),
     person("Yadi", "Li", email = "yadili@asu.edu", role = c("aut"))
     )
-Description: Use for generating plots for Bayesian IRT analysis conducted in blavaan. 
-    The following types of plots are available: 
-    Item-Person Map, Item Characteristic Curve, Item Information Curve, Test Characteristic Curve, Test Information Curve, 
-    Reliability Plot.
+Description: Use for generating plots for Bayesian item response theory (IRT) models fitted in 'blavaan'. 
+    Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC), Test
+    Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
