@@ -27,3 +27,7 @@ Imports:
 Depends: R (>= 4.1.0)
 LazyData: true
 LazyDataCompression: xz
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
