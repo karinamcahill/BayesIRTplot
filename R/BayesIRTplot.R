@@ -44,7 +44,7 @@
 #'   Note that if `overlay_style = "line"`, a maximum of 13 items can be plotted
 #' @param save_plots Should plots be saved? Logical; default to FALSE.
 #' @param save_dir Directory where plots will be saved when `save_plots = TRUE`. Defaults to the current working directory returned by `getwd()`.
-#'   A relative path within the current working directory may also be provided.
+#'   Absolute path or relative path within the current working directory may be provided.
 #' @param dpi If `save_plots = TRUE`, specifies the resolution (dots per inch) used when saving the plot. Default to 300.
 #' @returns A list of ggplot objects corresponding to the requested IRT plots.
 #'

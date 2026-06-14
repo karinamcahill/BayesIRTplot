@@ -78,7 +78,7 @@ Note that if \code{overlay_style = "line"}, a maximum of 13 items can be plotted
 \item{save_plots}{Should plots be saved? Logical; default to FALSE.}
 
 \item{save_dir}{Directory where plots will be saved when \code{save_plots = TRUE}. Defaults to the current working directory returned by \code{getwd()}.
-A relative path within the current working directory may also be provided.}
+Absolute path or relative path within the current working directory may be provided.}
 
 \item{dpi}{If \code{save_plots = TRUE}, specifies the resolution (dots per inch) used when saving the plot. Default to 300.}
 }

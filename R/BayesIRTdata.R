@@ -18,13 +18,13 @@
 #'   Summary of item threshold estimates across posterior draws. Used in IPM.
 #'   }
 #'   \item{summary_by_item_theta}{
-#'   Mean probabilities of a correct response and item information across posterior draws, by item and theta. Used in ICC and IIC.
+#'   Mean probabilities of a correct response and mean item information across posterior draws, by item and theta. Used in ICC and IIC.
 #'   }
 #'   \item{summary_by_draw_theta}{
 #'   Test expected scores and test information, by posterior draw and theta. Used in TCC and TIC.
 #'   }
 #'   \item{summary_by_theta}{
-#'   Mean test expected scores and test information across posterior draws, by theta. Used in TCC and TIC.
+#'   Mean test expected scores and mean test information across posterior draws, by theta. Used in TCC and TIC.
 #'   }
 #'   \item{summary_by_draw}{
 #'   Marginal reliability for each posterior draw. Used in REL.
