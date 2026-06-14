@@ -5,3 +5,5 @@
 .DS_Store
 .quarto
 man/figures/
+inst/doc
+vignettes/plots/
