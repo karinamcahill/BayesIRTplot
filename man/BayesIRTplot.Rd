@@ -16,6 +16,7 @@ BayesIRTplot(
   max_plots_panel = 9,
   ncol_panel = 3,
   overlay_style = "color",
+  print_plots = TRUE,
   save_plots = FALSE,
   save_dir = getwd(),
   dpi = 300
@@ -35,9 +36,9 @@ BayesIRTplot(
 \item ALL (default): All plots listed above
 }}
 
-\item{DrawsK}{Controls the number of draws being plotted as separate lines in ICC, IIC, TCC and TIC.
-Default to 50. Note that in those plots, the mean probability or the mean information are calculated using all draws from \code{blavaan} fitted object
-regardless of how many draws are plotted as separate lines. This does not affect IPM and REL plots which always use all draws.}
+\item{DrawsK}{Controls the number of posterior draws being plotted as separate lines in ICC, IIC, TCC and TIC.
+Default to 50. Note that in those plots, the mean probabilities or the mean information are calculated using all posterior draws from \code{blavaan} fitted object
+regardless of how many posterior draws are plotted as separate lines. This option does not affect IPM and REL plots which always use all posterior draws.}
 
 \item{items_IPM}{A list of items which will be included in IPM. By default, all items will be plotted.}
 
@@ -52,7 +53,7 @@ regardless of how many draws are plotted as separate lines. This does not affect
 \item overlay: several items overlaid in one plot
 }
 
-Note that in overlaid ICC plot, only the mean probability of correct across all draws for each item will be plotted (no separate lines for each draw).}
+Note that in overlaid ICC plot, only the mean probabilities of a correct response across all posterior draws will be plotted (no separate lines for each posterior draw).}
 
 \item{IICplot_option}{Type of IIC plot to generate. Can be one or more of the following:
 \itemize{
@@ -61,7 +62,7 @@ Note that in overlaid ICC plot, only the mean probability of correct across all 
 \item overlay: several items overlaid in one plot
 }
 
-Note that in overlaid IIC plot, only the mean item information across all draws for each item will be plotted (no separate lines for each draw).}
+Note that in overlaid IIC plot, only the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).}
 
 \item{max_plots_panel}{In panel ICC and IIC plots, controls the maximum number of items to be plotted in one panel. Default to 9.}
 
@@ -73,7 +74,9 @@ Note that in overlaid IIC plot, only the mean item information across all draws 
 \item line: different items are plotted in different line types
 }
 
-Note that if \code{overlay_style = "line"}, a maximum of 13 items can be plotted}
+Note that if \code{overlay_style = "line"}, a maximum of 13 items can be plotted.}
+
+\item{print_plots}{Should plots be printed? Logical; default to TRUE.}
 
 \item{save_plots}{Should plots be saved? Logical; default to FALSE.}
 
@@ -101,14 +104,14 @@ Depending on the requested plots and plotting options, the list may contain:
 }
 \description{
 Generate plots for Bayesian item response theory (IRT) models fitted in \code{blavaan}. \code{BayesIRTplot()} reads in a fitted IRT model from \code{blavaan}.
-Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
+The current version supports unidimensional two-parameter IRT models. Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
 Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
 }
 \examples{
 BayesIRTplot(tma.IRT.fitted.model)
 
-# Access individual plot
-plots <- BayesIRTplot(tma.IRT.fitted.model)
+# access individual plot
+plots <- BayesIRTplot(tma.IRT.fitted.model, print_plots = FALSE)
 plots$IPMplot
 
 }

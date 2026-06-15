@@ -16,38 +16,40 @@ A list of model information, datasets, and summary statistics used for plotting.
 Number of items in the fitted model.
 }
 \item{draws_by_item_theta}{
-Posterior draws of item parameter estimates, probabilities of a correct response, and item information across theta value. Used in ICC and IIC.
+Posterior draws of item discrimination (\code{a}) and item threshold (\code{tau}) parameters, calculated probabilities of a correct response (\code{p}) and item information (\code{i}) across theta values.
+
+The IRT models fitted in blavaan are on probit scale. Item discrimination estimates are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
+Item threshold estimates remain on the probit scale.
 }
 \item{summary_by_item}{
-Summary of item threshold estimates across posterior draws. Used in IPM.
+Summary of item threshold estimates across posterior draws (mean, Q1, median, Q3, minimum, maximum).
 }
 \item{summary_by_item_theta}{
-Mean probabilities of a correct response and mean item information across posterior draws, by item and theta. Used in ICC and IIC.
+Mean probabilities of a correct response (\code{p}) and mean item information (\code{i}) across posterior draws, by item and theta.
 }
 \item{summary_by_draw_theta}{
-Test expected scores and test information, by posterior draw and theta. Used in TCC and TIC.
+Test expected scores (\code{test_p}) and test information (\code{test_i}), by posterior draw and theta.
 }
 \item{summary_by_theta}{
-Mean test expected scores and mean test information across posterior draws, by theta. Used in TCC and TIC.
+Mean test expected scores (\code{test_p}) and mean test information (\code{test_i}) across posterior draws, by theta.
 }
 \item{summary_by_draw}{
-Marginal reliability for each posterior draw. Used in REL.
+Marginal reliability for each posterior draw. Reliability is calculated at each theta value, then averaged across theta values using standard normal distribution density weights.
 }
 \item{mean_reliability}{
-Mean marginal reliability across posterior draws. Used in REL.
+Marginal reliability calculated from the mean test information across posterior draws. Reliability at each theta value is calculated using the mean test information across posterior draws,
+then averaged across theta values using standard normal distribution density weights.
 }
 }
 }
 \description{
 Generate plotting data for Bayesian item response theory (IRT) models fitted in \code{blavaan}. \code{BayesIRTdata()} reads in a fitted IRT model from \code{blavaan}.
-The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
-Test Characteristic Curve (TCC), Test Information Curve (TIC), Reliability Plot (REL).
+The current version supports unidimensional two-parameter IRT models. The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
+Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
 }
 \examples{
-BayesIRTdata(tma.IRT.fitted.model)
-
-# Access individual dataset
+# access individual dataset
 data <- BayesIRTdata(tma.IRT.fitted.model)
-data$draws_by_item_theta
+data$summary_by_item
 
 }
