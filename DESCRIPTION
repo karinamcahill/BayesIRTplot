@@ -6,7 +6,8 @@ Authors@R: c(
     person("Roy", "Levy", email = "Roy.Levy@asu.edu", role = c("aut")),
     person("Yadi", "Li", email = "yadili@asu.edu", role = c("aut"))
     )
-Description: Use for generating plots for Bayesian item response theory (IRT) models fitted in 'blavaan'. 
+Description: Generate plots for Bayesian item response theory (IRT) models fitted in 'blavaan'. 
+    The current version supports unidimensional two-parameter IRT models.
     Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC), Test
     Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
 License: MIT + file LICENSE
