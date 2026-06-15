@@ -9,9 +9,10 @@
 <!-- badges: end -->
 
 `BayesIRTplot` generates plots for Bayesian item response theory (IRT)
-models fitted in `blavaan`. Available plots include Item-Person Map
-(IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
-Test Characteristic Curve (TCC), Test Information Curve (TIC), and
+models fitted in `blavaan`. The current version supports unidimensional
+two-parameter IRT models. Available plots include Item-Person Map (IPM),
+Item Characteristic Curve (ICC), Item Information Curve (IIC), Test
+Characteristic Curve (TCC), Test Information Curve (TIC), and
 Reliability Plot (REL).
 
 ## Installation
@@ -29,7 +30,7 @@ pak::pak("yadili134/BayesIRTplot")
 library(BayesIRTplot)
 BayesIRTplot(tma.IRT.fitted.model)
 
-# Access individual plot
-plots <- BayesIRTplot(tma.IRT.fitted.model)
+# access individual plot
+plots <- BayesIRTplot(tma.IRT.fitted.model, print_plots = FALSE)
 plots$IPMplot
 ```
