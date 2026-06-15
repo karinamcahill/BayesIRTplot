@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```
 
 # Overview 
-The `BayesIRTplot` package can be used to generate plots for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTplot()` reads in a fitted IRT model from `blavaan`. The following types of plots are available: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC), Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL). Here provides examples for the use of the package.
+The `BayesIRTplot` package can be used to generate plots for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTplot()` reads in a fitted IRT model from `blavaan`. The current version supports unidimensional two-parameter IRT models. The following types of plots are available: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC), Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL). Here provides examples for the use of the package.
 
 A fitted `blavaan` object (`tma.IRT.fitted.model`) is included in the package and it is used throughout the examples. Details on data source, data preparation and model fitting are provided at the end.
 
@@ -34,13 +34,13 @@ data("tma.IRT.fitted.model")
 ```
 
 ## Item-Person Map
-IPM shows the box plots of each item's threshold parameter. The box plots summarize Q1, Q3, median, min and max of the threshold parameter estimates across all posterior draws.
+IPM shows the box plots of each item's threshold estimates, which summarize Q1, Q3, median, minimum and maximum of the item threshold estimates across all posterior draws.
 ```{r}
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = "IPM") 
 ```
 
 ## Item Characteristic Curve
-In ICC, each grey line represents the probability of a correct response in one posterior draw, while the black line represents the mean across all posterior draws.
+In ICC, each grey line shows the probabilities of a correct response in one posterior draw, while the black line shows the mean across all posterior draws.
 
 By default, all items will be plotted. We can specify a few items by providing a list of item numbers with item names (optional). ICC can be generated as separate plots for each item, several items in a panel, or several items overlaid in one plot.
 ```{r}
@@ -64,7 +64,7 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot = "ICC", items_ICC_IIC = c(1,2,3),
 ```
 
 ## Item Information Curve
-In IIC, each grey line represents the item information in one posterior draw, while the black line represents the mean across all posterior draws. IIC plots can be requested in the same way as ICC.
+In IIC, each grey line shows the item information in one posterior draw, while the black line shows the mean across all posterior draws. IIC plots can be requested in the same way as ICC.
 ```{r}
 # panel IIC
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = "IIC", items_ICC_IIC = c(1, 3, 5, 6, 10, 12), 
@@ -72,19 +72,19 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot = "IIC", items_ICC_IIC = c(1, 3, 5, 6
 ```
 
 ## Test Characteristic Curve
-In TCC, each grey line represents the test expected score in one posterior draw, while the black line represents the mean across all posterior draws.
+In TCC, each grey line shows the test expected score in one posterior draw, while the black line shows the mean across all posterior draws.
 ```{r}
 BayesIRTplot(tma.IRT.fitted.model, IRTplot="TCC") 
 ```
 
 ## Test Information Curve
-In TIC, each grey line represents the test information in one posterior draw, while the black line represents the mean across all posterior draws.
+In TIC, each grey line shows the test information in one posterior draw, while the black line shows the mean across all posterior draws.
 ```{r}
 BayesIRTplot(tma.IRT.fitted.model, IRTplot="TIC")
 ```
 
 ## Reliability plot
-Reliability plot is a histogram of marginal reliability in each posterior draw. The mean marginal reliability across all posterior draws is indicated by the dashed vertical line.
+Reliability plot is a histogram of marginal reliability in each posterior draw. The marginal reliability based on all posterior draws is indicated by the dashed vertical line.
 ```{r}
 BayesIRTplot(tma.IRT.fitted.model, IRTplot="REL") 
 ```
@@ -116,21 +116,22 @@ Individual plots can also be accessed from the returned list. See ?BayesIRTplot 
 BayesIRTplot(tma.IRT.fitted.model, 
              save_plots = TRUE, save_dir = "Plots") 
 
+# suppress printing all plots
+plots <- BayesIRTplot(tma.IRT.fitted.model, print_plots = FALSE)
 # access IPMplot
-plots <- BayesIRTplot(tma.IRT.fitted.model)
 plots$IPMplot
 ```
 
-## Inspect datasets used for plotting
+## Access datasets used for plotting
 `BayesIRTdata()` can be used to return a list of datasets used in plotting. See ?BayesIRTdata for more details.
 ```{r, eval=FALSE}
 datasets <- BayesIRTdata(tma.IRT.fitted.model) 
-# access dataset 'summary_by_item_theta'
-datasets$summary_by_item_theta
+# access dataset 'summary_by_item'
+datasets$summary_by_item
 ```
 
 ## Data source, data preparation and model fitting
-The example uses the publicly available dataset "tma" from Item Response Warehouse, which can be accessed and downloaded from https://itemresponsewarehouse.org/data.html
+The example fitted model uses the publicly available dataset "tma" from Item Response Warehouse, which can be accessed and downloaded from https://itemresponsewarehouse.org/data.html
 
 <br>
 Reference: 
@@ -139,6 +140,8 @@ Taylor, J. A. (1953). A personality scale of manifest anxiety. *The Journal of A
 
 Datapages. (2026). *Item Response Warehouse* (Version 43.0), *tma* [Table]. Redivis (DOI:10.71778/V2DW-7A53). https://stanford.redivis.com/datasets/as2e-cv7jb41fd/tables/hd62-026kwagr9?v=43.0
 
+<br>
+Below are the code for data preparation and model fitting in blavaan.
 
 ```{r, eval = FALSE}
 # call the relevant libraries
@@ -167,9 +170,9 @@ df_demo <- df_wide[sample(1:nrow(df_wide), 500), ]
 # create item list: Q1-Q20
 items <- paste0("Q", 1:20)
 
-# define the 2PL model
-blavaan.2pl <- paste0(
-'# loadings/discrimination parameters:
+# define the IRT model
+blavaan.model <- paste0(
+'# discrimination parameters:
 F1 =~ ',
 paste(items, collapse = " + "), "\n",
 '# threshold parameters: ', "\n",
@@ -184,7 +187,7 @@ n.sample = 1000 # number of samples after burnin (per chain)
 # fit the model in blavaan 
 # the default priors will be used
 tma.IRT.fitted.model <- blavaan(
-  blavaan.2pl, 
+  blavaan.model, 
   n.chains = n.chains,
   burnin = n.burnin,
   sample = n.sample,
