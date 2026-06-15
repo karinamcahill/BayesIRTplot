@@ -1,8 +1,8 @@
 #' Generate plotting data for Bayesian item response theory models
 #'
 #' Generate plotting data for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTdata()` reads in a fitted IRT model from `blavaan`.
-#' The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
-#' Test Characteristic Curve (TCC), Test Information Curve (TIC), Reliability Plot (REL).
+#' The current version supports unidimensional two-parameter IRT models. The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
+#' Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
 #'
 #' @param blavaanobj A fitted IRT model from `blavaan`.
 #'
@@ -12,34 +12,36 @@
 #'   Number of items in the fitted model.
 #'   }
 #'   \item{draws_by_item_theta}{
-#'   Posterior draws of item parameter estimates, probabilities of a correct response, and item information across theta value. Used in ICC and IIC.
+#'   Posterior draws of item discrimination (`a`) and item threshold (`tau`) parameters, calculated probabilities of a correct response (`p`) and item information (`i`) across theta values.
+#'
+#'   The IRT models fitted in blavaan are on probit scale. Item discrimination estimates are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
+#'   Item threshold estimates remain on the probit scale.
 #'   }
 #'   \item{summary_by_item}{
-#'   Summary of item threshold estimates across posterior draws. Used in IPM.
+#'   Summary of item threshold estimates across posterior draws (mean, Q1, median, Q3, minimum, maximum).
 #'   }
 #'   \item{summary_by_item_theta}{
-#'   Mean probabilities of a correct response and mean item information across posterior draws, by item and theta. Used in ICC and IIC.
+#'   Mean probabilities of a correct response (`p`) and mean item information (`i`) across posterior draws, by item and theta.
 #'   }
 #'   \item{summary_by_draw_theta}{
-#'   Test expected scores and test information, by posterior draw and theta. Used in TCC and TIC.
+#'   Test expected scores (`test_p`) and test information (`test_i`), by posterior draw and theta.
 #'   }
 #'   \item{summary_by_theta}{
-#'   Mean test expected scores and mean test information across posterior draws, by theta. Used in TCC and TIC.
+#'   Mean test expected scores (`test_p`) and mean test information (`test_i`) across posterior draws, by theta.
 #'   }
 #'   \item{summary_by_draw}{
-#'   Marginal reliability for each posterior draw. Used in REL.
+#'   Marginal reliability for each posterior draw. Reliability is calculated at each theta value, then averaged across theta values using standard normal distribution density weights.
 #'   }
 #'   \item{mean_reliability}{
-#'   Mean marginal reliability across posterior draws. Used in REL.
+#'   Marginal reliability calculated from the mean test information across posterior draws. Reliability at each theta value is calculated using the mean test information across posterior draws,
+#'   then averaged across theta values using standard normal distribution density weights.
 #'   }
 #' }
 #'
 #' @examples
-#' BayesIRTdata(tma.IRT.fitted.model)
-#'
-#' # Access individual dataset
+#' # access individual dataset
 #' data <- BayesIRTdata(tma.IRT.fitted.model)
-#' data$draws_by_item_theta
+#' data$summary_by_item
 #'
 #' @export
 BayesIRTdata <- function(blavaanobj)
@@ -58,8 +60,8 @@ BayesIRTdata <- function(blavaanobj)
   # rename parameters
   a_start <- 1 # starting column number for a parameters
   a_end <- nitems  # ending column number for a parameters
-  tau_start <- nitems+1 # starting column number for tau parameters
-  tau_end <- nitems*2  # ending column number for tau parameters
+  tau_start <- nitems + 1 # starting column number for tau parameters
+  tau_end <- nitems * 2  # ending column number for tau parameters
 
   # rename a parameters
   coda::varnames(draws.sim.to.analyze)[a_start:a_end] <- paste0("a_", seq(from = 1, to = nitems))
@@ -139,7 +141,7 @@ BayesIRTdata <- function(blavaanobj)
   # merge with draws of parameter values
   draws_by_item_theta <- merge(draws_theta, drawsfinalsim, by = c("draw","itemnum"))
   # transformation of a parameter (from probit to logit)
-  draws_by_item_theta$a <- draws_by_item_theta$a*1.702
+  draws_by_item_theta$a <- draws_by_item_theta$a * 1.702
   # item information
   draws_by_item_theta$i <- with(draws_by_item_theta, a^2 * p * (1 - p))
   # reorder it by draw and itemnum
