@@ -1,7 +1,7 @@
 #' Generate plots for Bayesian item response theory models
 #'
 #' Generate plots for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTplot()` reads in a fitted IRT model from `blavaan`.
-#' Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
+#' The current version supports unidimensional two-parameter IRT models. Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
 #' Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
 #'
 #' @param blavaanobj A fitted IRT model from `blavaan`.
@@ -14,9 +14,9 @@
 #'   * TIC: Test Information Curve
 #'   * REL: Reliability Plot
 #'   * ALL (default): All plots listed above
-#' @param DrawsK Controls the number of draws being plotted as separate lines in ICC, IIC, TCC and TIC.
-#'   Default to 50. Note that in those plots, the mean probability or the mean information are calculated using all draws from `blavaan` fitted object
-#'   regardless of how many draws are plotted as separate lines. This does not affect IPM and REL plots which always use all draws.
+#' @param DrawsK Controls the number of posterior draws being plotted as separate lines in ICC, IIC, TCC and TIC.
+#'   Default to 50. Note that in those plots, the mean probabilities or the mean information are calculated using all posterior draws from `blavaan` fitted object
+#'   regardless of how many posterior draws are plotted as separate lines. This option does not affect IPM and REL plots which always use all posterior draws.
 #' @param items_IPM A list of items which will be included in IPM. By default, all items will be plotted.
 #' @param items_ICC_IIC A list of items for which ICC and IIC will be generated. By default, ICC and IIC of all items will be generated.
 #' @param item_names_ICC_IIC A list of item names to be displayed on ICC and IIC (optional). Should be of the same length as `items_ICC_IIC`.
@@ -26,14 +26,14 @@
 #'   * panel: several items plotted in a panel
 #'   * overlay: several items overlaid in one plot
 #'
-#'   Note that in overlaid ICC plot, only the mean probability of correct across all draws for each item will be plotted (no separate lines for each draw).
+#'   Note that in overlaid ICC plot, only the mean probabilities of a correct response across all posterior draws will be plotted (no separate lines for each posterior draw).
 #' @param IICplot_option Type of IIC plot to generate. Can be one or more of the following:
 #'
 #'   * separate (default): each item in a separate plot
 #'   * panel: several items plotted in a panel
 #'   * overlay: several items overlaid in one plot
 #'
-#'   Note that in overlaid IIC plot, only the mean item information across all draws for each item will be plotted (no separate lines for each draw).
+#'   Note that in overlaid IIC plot, only the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).
 #' @param max_plots_panel In panel ICC and IIC plots, controls the maximum number of items to be plotted in one panel. Default to 9.
 #' @param ncol_panel In panel ICC and IIC plots, controls the number of columns in one panel. Default to 3.
 #' @param overlay_style In overlaid ICC and IIC plots, controls the way to distinguish different items:
@@ -41,7 +41,8 @@
 #'   * color (default): different items are plotted in different colors
 #'   * line: different items are plotted in different line types
 #'
-#'   Note that if `overlay_style = "line"`, a maximum of 13 items can be plotted
+#'   Note that if `overlay_style = "line"`, a maximum of 13 items can be plotted.
+#' @param print_plots Should plots be printed? Logical; default to TRUE.
 #' @param save_plots Should plots be saved? Logical; default to FALSE.
 #' @param save_dir Directory where plots will be saved when `save_plots = TRUE`. Defaults to the current working directory returned by `getwd()`.
 #'   Absolute path or relative path within the current working directory may be provided.
@@ -63,8 +64,8 @@
 #' @examples
 #' BayesIRTplot(tma.IRT.fitted.model)
 #'
-#' # Access individual plot
-#' plots <- BayesIRTplot(tma.IRT.fitted.model)
+#' # access individual plot
+#' plots <- BayesIRTplot(tma.IRT.fitted.model, print_plots = FALSE)
 #' plots$IPMplot
 #'
 #' @export
@@ -79,6 +80,7 @@ BayesIRTplot <- function(blavaanobj,
                          max_plots_panel = 9,
                          ncol_panel = 3,
                          overlay_style = "color",
+                         print_plots = TRUE,
                          save_plots = FALSE,
                          save_dir = getwd(),
                          dpi = 300)
@@ -152,9 +154,9 @@ BayesIRTplot <- function(blavaanobj,
     scaleFUN <- function(x) sprintf("%.2f", x)
 
     # Box plot of item thresholds
-    IPMplot <- ggplot(data = sum_by_item_IPM, aes(x = factor(itemnum), y = mean_tau)) +
-      geom_point(size = 2, colour = "black") +
+    IPMplot <- ggplot(data = sum_by_item_IPM) +
       geom_boxplot(aes(
+        x = factor (itemnum),
         lower = q1_tau,
         middle = q2_tau,
         upper = q3_tau,
@@ -171,7 +173,10 @@ BayesIRTplot <- function(blavaanobj,
       scale_x_discrete(limits = as.character(sort(unique(sum_by_item_IPM$itemnum)))) +
       theme(text = element_text(family = "serif", size = 12))
 
-    print(IPMplot)
+
+    if (print_plots==TRUE){
+      print(IPMplot)
+    }
     plots$IPMplot <- IPMplot
   }
 
@@ -222,8 +227,8 @@ BayesIRTplot <- function(blavaanobj,
 
         item_plot = item_list_ICC_IIC[i]
         title_text <- ifelse(!is.null(item_names_ICC_IIC),
-                             paste("2PL Item Characteristic Curve for", item_names_ICC_IIC[i]),
-                             paste("2PL Item Characteristic Curve for Item", item_plot))
+                             paste("Item Characteristic Curve for", item_names_ICC_IIC[i]),
+                             paste("Item Characteristic Curve for Item", item_plot))
 
         ICCplot <- ggplot(subset(draws_by_item_theta, itemnum == item_plot & draw %in% c(1:as.integer(DrawsK))), # subset to DrawsK number of draws
                           aes(x = theta, y = p, colour = as.factor(draw))) +
@@ -238,7 +243,9 @@ BayesIRTplot <- function(blavaanobj,
           theme_classic() +
           theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
-        print(ICCplot)
+        if (print_plots==TRUE){
+          print(ICCplot)
+        }
         plots[[paste0("ICCplot_item", item_plot)]] <- ICCplot
       }}
 
@@ -246,7 +253,7 @@ BayesIRTplot <- function(blavaanobj,
     # plot items in a panel
     if (ICC_panel == 1){
 
-      # split item list into groups (by default, a maximum of 9 plots will be plotted in a panel)
+      # split item list into groups
       item_groups <- split(
         item_list_ICC_IIC,
         ceiling(seq_along(item_list_ICC_IIC) / max_plots_panel)
@@ -287,15 +294,16 @@ BayesIRTplot <- function(blavaanobj,
           geom_line(data = sum_data, aes(x = theta, y = p), colour = "black", linewidth = 1.2) +
           facet_wrap(~ item_label, ncol = ncol_panel) +
           labs(
-            title = "2PL Item Characteristic Curve",
+            title = "Item Characteristic Curve",
             subtitle = paste(DrawsK, "draws are plotted"),
             x = expression(theta),
             y = expression(italic(p)(y == 1))
           ) +
           theme_classic() +
           theme(legend.position = "none", text = element_text(family = "serif", size = 12))
-
-        print(ICCplot_panel)
+        if (print_plots==TRUE){
+          print(ICCplot_panel)
+        }
         plots[[paste0("ICCplot_panel", g)]] <- ICCplot_panel
       }}
 
@@ -325,7 +333,7 @@ BayesIRTplot <- function(blavaanobj,
                 group = item_label,
                 colour = item_label),
             linewidth = 1, alpha = 0.8) +
-          labs(title = "2PL Item Characteristic Curve",
+          labs(title = "Item Characteristic Curve",
                colour = "Item",
                x = expression(theta),
                y = expression(italic(p)(y==1))) +
@@ -344,15 +352,18 @@ BayesIRTplot <- function(blavaanobj,
                 group = item_label,
                 linetype = item_label),
             linewidth = 1) +
-          labs(title = "2PL Item Characteristic Curve",
+          labs(title = "Item Characteristic Curve",
                linetype = "Item",
                x = expression(theta),
                y = expression(italic(p)(y==1))) +
           theme_classic() +
           theme(text = element_text(family = "serif", size = 12))
       }
+      if (print_plots==TRUE){
+        print(ICCplot_overlay)
+      }
       plots$ICCplot_overlay <- ICCplot_overlay
-      print(ICCplot_overlay)
+
     }
   }
 
@@ -383,8 +394,8 @@ BayesIRTplot <- function(blavaanobj,
 
         item_plot = item_list_ICC_IIC[i]
         title_text <- ifelse(!is.null(item_names_ICC_IIC),
-                             paste("2PL Item Information Curve for", item_names_ICC_IIC[i]),
-                             paste("2PL Item Information Curve for Item", item_plot))
+                             paste("Item Information Curve for", item_names_ICC_IIC[i]),
+                             paste("Item Information Curve for Item", item_plot))
 
         IICplot <-
           ggplot(subset(draws_by_item_theta, itemnum == item_plot & draw %in% c(1:as.integer(DrawsK))), # subset to DrawsK number of draws
@@ -400,7 +411,9 @@ BayesIRTplot <- function(blavaanobj,
           theme_classic() +
           theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
-        print(IICplot)
+        if (print_plots==TRUE){
+          print(IICplot)
+        }
         plots[[paste0("IICplot_item", item_plot)]] <- IICplot
       }}
 
@@ -449,14 +462,16 @@ BayesIRTplot <- function(blavaanobj,
           geom_line(data = sum_data, aes(x = theta, y = i), colour = "black", linewidth = 1.2) +
           facet_wrap(~ item_label, ncol = ncol_panel) +
           labs(
-            title = "2PL Item Information Curve",
+            title = "Item Information Curve",
             subtitle = paste(DrawsK, "draws are plotted"),
             x = expression(theta),
             y = "Information") +
           theme_classic() +
           theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
-        print(IICplot_panel)
+        if (print_plots==TRUE){
+          print(IICplot_panel)
+        }
         plots[[paste0("IICplot_panel", g)]] <- IICplot_panel
       }}
 
@@ -486,7 +501,7 @@ BayesIRTplot <- function(blavaanobj,
                 group = item_label,
                 colour = item_label),
             linewidth = 1, alpha = 0.8) +
-          labs(title = "2PL Item Information Curve",
+          labs(title = "Item Information Curve",
                colour = "Item",
                x = expression(theta),
                y = "Information") +
@@ -505,15 +520,18 @@ BayesIRTplot <- function(blavaanobj,
                 group = item_label,
                 linetype = item_label),
             linewidth = 1) +
-          labs(title = "2PL Item Information Curve",
+          labs(title = "Item Information Curve",
                linetype = "Item",
                x = expression(theta),
                y = "Information") +
           theme_classic() +
           theme(text = element_text(family = "serif", size = 12))
       }
+
+      if (print_plots==TRUE){
+        print(IICplot_overlay)
+      }
       plots$IICplot_overlay <- IICplot_overlay
-      print(IICplot_overlay)
     }
 
   }
@@ -529,7 +547,7 @@ BayesIRTplot <- function(blavaanobj,
              aes(x = theta, y = test_p, color = as.factor(draw))) +
       geom_line(alpha = 0.4)  +
       scale_colour_grey() +
-      labs(title = "2PL Test Characteristic Curve",
+      labs(title = "Test Characteristic Curve",
            subtitle = paste(DrawsK, "draws are plotted"),
            x = expression(theta),
            y = "Expected Score") +
@@ -537,7 +555,9 @@ BayesIRTplot <- function(blavaanobj,
       theme_classic() +
       theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
-    print(TCCplot)
+    if (print_plots==TRUE){
+      print(TCCplot)
+    }
     plots$TCCplot <- TCCplot
   }
 
@@ -551,7 +571,7 @@ BayesIRTplot <- function(blavaanobj,
              aes(x = theta, y = test_i, color = as.factor(draw))) +
       geom_line(alpha = 0.4)  +
       scale_colour_grey() +
-      labs(title = "2PL Test Information Curve",
+      labs(title = "Test Information Curve",
            subtitle = paste(DrawsK, "draws are plotted"),
            x = expression(theta),
            y = "Information") +
@@ -559,7 +579,9 @@ BayesIRTplot <- function(blavaanobj,
       theme_classic() +
       theme(legend.position = "none", text = element_text(family = "serif", size = 12))
 
-    print(TICplot)
+    if (print_plots==TRUE){
+      print(TICplot)
+    }
     plots$TICplot <- TICplot
   }
 
@@ -587,7 +609,9 @@ BayesIRTplot <- function(blavaanobj,
             axis.ticks.y = element_blank(),     #ticks
             axis.title.y = element_blank())     #axis title
 
-    print(RELplot)
+    if (print_plots==TRUE){
+      print(RELplot)
+    }
     plots$RELplot <- RELplot
   }
 
