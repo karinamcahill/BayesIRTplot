@@ -148,7 +148,10 @@ BayesIRTplot <- function(blavaanobj,
       }
 
     sum_by_item_IPM <- summary_by_item |>
-      dplyr::filter(itemnum %in% item_list_IPM)
+      dplyr::filter(itemnum %in% item_list_IPM) |>
+      dplyr::mutate(
+        itemnum = factor(itemnum, levels = item_list_IPM)
+      )
 
     # Yaxis two digits
     scaleFUN <- function(x) sprintf("%.2f", x)
@@ -156,7 +159,7 @@ BayesIRTplot <- function(blavaanobj,
     # Box plot of item thresholds
     IPMplot <- ggplot(data = sum_by_item_IPM) +
       geom_boxplot(aes(
-        x = factor (itemnum),
+        x = itemnum,
         lower = q1_tau,
         middle = q2_tau,
         upper = q3_tau,
@@ -170,7 +173,6 @@ BayesIRTplot <- function(blavaanobj,
       labs(x = "Item Number", y = "Item Threshold") +
       scale_y_continuous(labels = scaleFUN, position = "right", expand = expansion(mult = 0.05),
                          breaks = scales::breaks_pretty(n = 4)) +
-      scale_x_discrete(limits = as.character(sort(unique(sum_by_item_IPM$itemnum)))) +
       theme(text = element_text(family = "serif", size = 12))
 
 
@@ -204,8 +206,6 @@ BayesIRTplot <- function(blavaanobj,
       item_names_ICC_IIC,
       item_list_ICC_IIC)
   }
-  # sort item numbers
-  item_list_ICC_IIC <- sort(item_list_ICC_IIC)
 
   ##########################################
   ### * Item Characteristic Curve Plot -----
