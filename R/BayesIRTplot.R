@@ -270,7 +270,6 @@ BayesIRTplot <- function(blavaanobj,
       for (g in seq_along(item_groups)) {
 
         current_items <- item_groups[[g]]
-        current_items <- sort(current_items)
 
         # subset to current items and needed draws
         plot_data <- subset(
@@ -436,7 +435,6 @@ BayesIRTplot <- function(blavaanobj,
       for (g in seq_along(item_groups)) {
 
         current_items <- item_groups[[g]]
-        current_items <- sort(current_items)
 
         # subset to current items and needed draws
         plot_data <- subset(
