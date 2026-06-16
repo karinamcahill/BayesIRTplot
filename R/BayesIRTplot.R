@@ -193,12 +193,19 @@ BayesIRTplot <- function(blavaanobj,
       unique(items_ICC_IIC)
     }
 
+  name_map <- NULL
   # check item names, if provided, then must match with the number of items listed for plotting
   if (!is.null(item_names_ICC_IIC)) {
     if (length(item_names_ICC_IIC) != length(item_list_ICC_IIC)) {
       stop("number of item names must equal number of items to be plotted")
-    }}
-
+    }
+    # mapping between item numbers and item names
+    name_map <- stats::setNames(
+      item_names_ICC_IIC,
+      item_list_ICC_IIC)
+  }
+  # sort item numbers
+  item_list_ICC_IIC <- sort(item_list_ICC_IIC)
 
   ##########################################
   ### * Item Characteristic Curve Plot -----
@@ -227,7 +234,7 @@ BayesIRTplot <- function(blavaanobj,
 
         item_plot = item_list_ICC_IIC[i]
         title_text <- ifelse(!is.null(item_names_ICC_IIC),
-                             paste("Item Characteristic Curve for", item_names_ICC_IIC[i]),
+                             paste("Item Characteristic Curve for", name_map[as.character(item_plot)]),
                              paste("Item Characteristic Curve for Item", item_plot))
 
         ICCplot <- ggplot(subset(draws_by_item_theta, itemnum == item_plot & draw %in% c(1:as.integer(DrawsK))), # subset to DrawsK number of draws
@@ -278,9 +285,7 @@ BayesIRTplot <- function(blavaanobj,
 
         # item names
         if (!is.null(item_names_ICC_IIC)) {
-          current_names <- item_names_ICC_IIC[
-            match(current_items, item_list_ICC_IIC)
-          ]
+          current_names <- name_map[as.character(current_items)]
         }else {
           current_names <- paste("Item", current_items)
         }
@@ -318,7 +323,7 @@ BayesIRTplot <- function(blavaanobj,
       # item names
       summary_by_item_theta$item_label <-
         if (!is.null(item_names_ICC_IIC)) {
-          factor(summary_by_item_theta$itemnum, levels = item_list_ICC_IIC, labels = item_names_ICC_IIC)
+          factor(summary_by_item_theta$itemnum, levels = item_list_ICC_IIC, labels = name_map[as.character(item_list_ICC_IIC)])
         } else {
           factor(summary_by_item_theta$itemnum, levels = item_list_ICC_IIC, labels = item_list_ICC_IIC)
         }
@@ -394,7 +399,7 @@ BayesIRTplot <- function(blavaanobj,
 
         item_plot = item_list_ICC_IIC[i]
         title_text <- ifelse(!is.null(item_names_ICC_IIC),
-                             paste("Item Information Curve for", item_names_ICC_IIC[i]),
+                             paste("Item Information Curve for", name_map[as.character(item_plot)]),
                              paste("Item Information Curve for Item", item_plot))
 
         IICplot <-
@@ -446,9 +451,7 @@ BayesIRTplot <- function(blavaanobj,
 
         # item names
         if (!is.null(item_names_ICC_IIC)) {
-          current_names <- item_names_ICC_IIC[
-            match(current_items, item_list_ICC_IIC)
-          ]
+          current_names <- name_map[as.character(current_items)]
         }else {
           current_names <- paste("Item", current_items)
         }
@@ -486,7 +489,7 @@ BayesIRTplot <- function(blavaanobj,
       # item names
       summary_by_item_theta$item_label <-
         if (!is.null(item_names_ICC_IIC)) {
-          factor(summary_by_item_theta$itemnum, levels = item_list_ICC_IIC, labels = item_names_ICC_IIC)
+          factor(summary_by_item_theta$itemnum, levels = item_list_ICC_IIC, labels = name_map[as.character(item_list_ICC_IIC)])
         } else {
           factor(summary_by_item_theta$itemnum, levels = item_list_ICC_IIC, labels = item_list_ICC_IIC)
         }
