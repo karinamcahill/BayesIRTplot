@@ -132,6 +132,13 @@ BayesIRTplot <- function(blavaanobj,
   # initialize a list for plots
   plots <- list()
 
+  # show two digits on axis, remove leading zeros
+  scaleFUN <- function(x) {
+    labels <- sprintf("%.2f", x)
+    labels[which(x == 0)] <- "0"
+    gsub("(-?)0\\.", "\\1.", labels)
+  }
+
 
   ################################
   ### * Item-Person Map Plot -----
@@ -152,9 +159,6 @@ BayesIRTplot <- function(blavaanobj,
       dplyr::mutate(
         itemnum = factor(itemnum, levels = item_list_IPM)
       )
-
-    # Yaxis two digits
-    scaleFUN <- function(x) sprintf("%.2f", x)
 
     # Box plot of item thresholds
     IPMplot <- ggplot(data = sum_by_item_IPM) +
@@ -248,7 +252,8 @@ BayesIRTplot <- function(blavaanobj,
           geom_line(data = subset(summary_by_item_theta, itemnum == item_plot),
                     aes(x = theta, y = p), colour = "black", linetype = "solid", linewidth = 2) +
           theme_classic() +
-          theme(legend.position = "none", text = element_text(family = "serif", size = 12))
+          theme(legend.position = "none", text = element_text(family = "serif", size = 12)) +
+          scale_y_continuous(labels = scaleFUN)
 
         if (print_plots==TRUE){
           print(ICCplot)
@@ -304,14 +309,16 @@ BayesIRTplot <- function(blavaanobj,
             y = expression(italic(p)(y == 1))
           ) +
           theme_classic() +
-          theme(legend.position = "none", text = element_text(family = "serif", size = 12))
+          theme(legend.position = "none", text = element_text(family = "serif", size = 12)) +
+          scale_y_continuous(labels = scaleFUN)
+
         if (print_plots==TRUE){
           print(ICCplot_panel)
         }
         plots[[paste0("ICCplot_panel", g)]] <- ICCplot_panel
       }}
 
-    # overlay items in a panel
+    # overlay items in a plot
     if (ICC_overlay == 1){
 
       if (toupper(overlay_style) == "LINE" &&
@@ -343,7 +350,8 @@ BayesIRTplot <- function(blavaanobj,
                y = expression(italic(p)(y==1))) +
           theme_classic() +
           theme(text = element_text(family = "serif", size = 12)) +
-          scale_color_hue(l = 70, c = 60)
+          scale_color_hue(l = 70, c = 60) +
+          scale_y_continuous(labels = scaleFUN)
       }
 
       # distinguish items by different line types
@@ -361,7 +369,8 @@ BayesIRTplot <- function(blavaanobj,
                x = expression(theta),
                y = expression(italic(p)(y==1))) +
           theme_classic() +
-          theme(text = element_text(family = "serif", size = 12))
+          theme(text = element_text(family = "serif", size = 12)) +
+          scale_y_continuous(labels = scaleFUN)
       }
       if (print_plots==TRUE){
         print(ICCplot_overlay)
@@ -413,7 +422,8 @@ BayesIRTplot <- function(blavaanobj,
           geom_line(data = subset(summary_by_item_theta, itemnum == item_plot),
                     aes(x = theta, y = i), colour = "black", linetype = "solid", linewidth = 2) +
           theme_classic() +
-          theme(legend.position = "none", text = element_text(family = "serif", size = 12))
+          theme(legend.position = "none", text = element_text(family = "serif", size = 12)) +
+          scale_y_continuous(labels = scaleFUN)
 
         if (print_plots==TRUE){
           print(IICplot)
@@ -468,7 +478,8 @@ BayesIRTplot <- function(blavaanobj,
             x = expression(theta),
             y = "Information") +
           theme_classic() +
-          theme(legend.position = "none", text = element_text(family = "serif", size = 12))
+          theme(legend.position = "none", text = element_text(family = "serif", size = 12)) +
+          scale_y_continuous(labels = scaleFUN)
 
         if (print_plots==TRUE){
           print(IICplot_panel)
@@ -476,7 +487,7 @@ BayesIRTplot <- function(blavaanobj,
         plots[[paste0("IICplot_panel", g)]] <- IICplot_panel
       }}
 
-    # overlay items in a panel
+    # overlay items in a plot
     if (IIC_overlay == 1){
 
       if (toupper(overlay_style) == "LINE" &&
@@ -508,7 +519,8 @@ BayesIRTplot <- function(blavaanobj,
                y = "Information") +
           theme_classic() +
           theme(text = element_text(family = "serif", size = 12)) +
-          scale_color_hue(l = 70, c = 60)
+          scale_color_hue(l = 70, c = 60) +
+          scale_y_continuous(labels = scaleFUN)
       }
 
       # distinguish items by different line types
@@ -526,7 +538,8 @@ BayesIRTplot <- function(blavaanobj,
                x = expression(theta),
                y = "Information") +
           theme_classic() +
-          theme(text = element_text(family = "serif", size = 12))
+          theme(text = element_text(family = "serif", size = 12)) +
+          scale_y_continuous(labels = scaleFUN)
       }
 
       if (print_plots==TRUE){
@@ -597,7 +610,7 @@ BayesIRTplot <- function(blavaanobj,
         fill = "grey40",
         color = "white"
       ) +
-      scale_x_continuous(breaks = seq(0, 1, by = .01)) +
+      scale_x_continuous(breaks = seq(0, 1, by = .01), labels = scaleFUN) +
       scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
       theme_classic() +
       theme(legend.position = "none") +
