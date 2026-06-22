@@ -7,4 +7,6 @@
 man/figures/
 inst/doc
 vignettes/plots/
-docs
+/docs/
+/doc/
+/Meta/
