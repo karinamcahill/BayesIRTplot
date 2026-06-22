@@ -5,7 +5,7 @@
 #' Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
 #'
 #' @param blavaanobj A fitted IRT model from `blavaan`.
-#' @param IRTplot Type of IRT plot to generate. Can be one or more of the following:
+#' @param IRTplot Types of IRT plots to generate. Can be one or more of the following:
 #'
 #'   * IPM: Item-Person Map
 #'   * ICC: Item Characteristic Curve
@@ -14,8 +14,10 @@
 #'   * TIC: Test Information Curve
 #'   * REL: Reliability Plot
 #'   * ALL (default): All plots listed above
-#' @param DrawsK Controls the number of posterior draws being plotted as separate lines in ICC, IIC, TCC and TIC.
-#'   Default to 50. Note that in those plots, the mean probabilities or the mean information are calculated using all posterior draws from `blavaan` fitted object
+#' @param DrawsK Controls the number of posterior draws plotted as separate lines in ICC, IIC, TCC and TIC. Default to 50.
+#'   The first `DrawsK` posterior draws are plotted (i.e., the draws are not randomly selected).
+#'   If `DrawsK` exceeds the number of available posterior draws, all available posterior draws are plotted.
+#'   Note that in those plots, the mean probabilities or the mean information are calculated using all posterior draws from `blavaan` fitted object
 #'   regardless of how many posterior draws are plotted as separate lines. This option does not affect IPM and REL plots which always use all posterior draws.
 #' @param items_IPM A list of items which will be included in IPM. By default, all items will be plotted.
 #' @param items_ICC_IIC A list of items for which ICC and IIC will be generated. By default, ICC and IIC of all items will be generated.
@@ -26,7 +28,7 @@
 #'   * panel: several items plotted in a panel
 #'   * overlay: several items overlaid in one plot
 #'
-#'   Note that in overlaid plots, only the mean probabilities of a correct response or the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).
+#'   Note that in overlaid ICC and IIC plots, only the mean probabilities of a correct response or the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).
 #' @param max_plots_panel In panel ICC and IIC plots, controls the maximum number of items to be plotted in one panel. Default to 9.
 #' @param ncol_panel In panel ICC and IIC plots, controls the number of columns in one panel. Default to 3.
 #' @param overlay_style In overlaid ICC and IIC plots, controls the way to distinguish different items:
@@ -95,7 +97,7 @@ BayesIRTplot <- function(blavaanobj,
     warning (paste0(
       "DrawsK (", DrawsK,
       ") exceeds the number of available posterior draws (", ndraws,
-      "). All available draws will be used."
+      "). All available posterior draws will be used."
     ))
   }
 

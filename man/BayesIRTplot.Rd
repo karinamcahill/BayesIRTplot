@@ -24,7 +24,7 @@ BayesIRTplot(
 \arguments{
 \item{blavaanobj}{A fitted IRT model from \code{blavaan}.}
 
-\item{IRTplot}{Type of IRT plot to generate. Can be one or more of the following:
+\item{IRTplot}{Types of IRT plots to generate. Can be one or more of the following:
 \itemize{
 \item IPM: Item-Person Map
 \item ICC: Item Characteristic Curve
@@ -35,8 +35,10 @@ BayesIRTplot(
 \item ALL (default): All plots listed above
 }}
 
-\item{DrawsK}{Controls the number of posterior draws being plotted as separate lines in ICC, IIC, TCC and TIC.
-Default to 50. Note that in those plots, the mean probabilities or the mean information are calculated using all posterior draws from \code{blavaan} fitted object
+\item{DrawsK}{Controls the number of posterior draws plotted as separate lines in ICC, IIC, TCC and TIC. Default to 50.
+The first \code{DrawsK} posterior draws are plotted (i.e., the draws are not randomly selected).
+If \code{DrawsK} exceeds the number of available posterior draws, all available posterior draws are plotted.
+Note that in those plots, the mean probabilities or the mean information are calculated using all posterior draws from \code{blavaan} fitted object
 regardless of how many posterior draws are plotted as separate lines. This option does not affect IPM and REL plots which always use all posterior draws.}
 
 \item{items_IPM}{A list of items which will be included in IPM. By default, all items will be plotted.}
@@ -52,7 +54,7 @@ regardless of how many posterior draws are plotted as separate lines. This optio
 \item overlay: several items overlaid in one plot
 }
 
-Note that in overlaid plots, only the mean probabilities of a correct response or the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).}
+Note that in overlaid ICC and IIC plots, only the mean probabilities of a correct response or the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).}
 
 \item{max_plots_panel}{In panel ICC and IIC plots, controls the maximum number of items to be plotted in one panel. Default to 9.}
 
