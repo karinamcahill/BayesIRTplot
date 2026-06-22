@@ -11,8 +11,7 @@ BayesIRTplot(
   items_IPM = "ALL",
   items_ICC_IIC = "ALL",
   item_names_ICC_IIC = NULL,
-  ICCplot_option = "separate",
-  IICplot_option = "separate",
+  plot_option_ICC_IIC = "separate",
   max_plots_panel = 9,
   ncol_panel = 3,
   overlay_style = "color",
@@ -46,23 +45,14 @@ regardless of how many posterior draws are plotted as separate lines. This optio
 
 \item{item_names_ICC_IIC}{A list of item names to be displayed on ICC and IIC (optional). Should be of the same length as \code{items_ICC_IIC}.}
 
-\item{ICCplot_option}{Type of ICC plot to generate. Can be one or more of the following:
+\item{plot_option_ICC_IIC}{Types of ICC and IIC plots to generate. Can be one or more of the following:
 \itemize{
 \item separate (default): each item in a separate plot
 \item panel: several items plotted in a panel
 \item overlay: several items overlaid in one plot
 }
 
-Note that in overlaid ICC plot, only the mean probabilities of a correct response across all posterior draws will be plotted (no separate lines for each posterior draw).}
-
-\item{IICplot_option}{Type of IIC plot to generate. Can be one or more of the following:
-\itemize{
-\item separate (default): each item in a separate plot
-\item panel: several items plotted in a panel
-\item overlay: several items overlaid in one plot
-}
-
-Note that in overlaid IIC plot, only the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).}
+Note that in overlaid plots, only the mean probabilities of a correct response or the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).}
 
 \item{max_plots_panel}{In panel ICC and IIC plots, controls the maximum number of items to be plotted in one panel. Default to 9.}
 

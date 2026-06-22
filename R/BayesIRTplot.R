@@ -20,20 +20,13 @@
 #' @param items_IPM A list of items which will be included in IPM. By default, all items will be plotted.
 #' @param items_ICC_IIC A list of items for which ICC and IIC will be generated. By default, ICC and IIC of all items will be generated.
 #' @param item_names_ICC_IIC A list of item names to be displayed on ICC and IIC (optional). Should be of the same length as `items_ICC_IIC`.
-#' @param ICCplot_option Type of ICC plot to generate. Can be one or more of the following:
+#' @param plot_option_ICC_IIC Types of ICC and IIC plots to generate. Can be one or more of the following:
 #'
 #'   * separate (default): each item in a separate plot
 #'   * panel: several items plotted in a panel
 #'   * overlay: several items overlaid in one plot
 #'
-#'   Note that in overlaid ICC plot, only the mean probabilities of a correct response across all posterior draws will be plotted (no separate lines for each posterior draw).
-#' @param IICplot_option Type of IIC plot to generate. Can be one or more of the following:
-#'
-#'   * separate (default): each item in a separate plot
-#'   * panel: several items plotted in a panel
-#'   * overlay: several items overlaid in one plot
-#'
-#'   Note that in overlaid IIC plot, only the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).
+#'   Note that in overlaid plots, only the mean probabilities of a correct response or the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).
 #' @param max_plots_panel In panel ICC and IIC plots, controls the maximum number of items to be plotted in one panel. Default to 9.
 #' @param ncol_panel In panel ICC and IIC plots, controls the number of columns in one panel. Default to 3.
 #' @param overlay_style In overlaid ICC and IIC plots, controls the way to distinguish different items:
@@ -75,8 +68,7 @@ BayesIRTplot <- function(blavaanobj,
                          items_IPM = "ALL",
                          items_ICC_IIC = "ALL",
                          item_names_ICC_IIC = NULL,
-                         ICCplot_option = "separate",
-                         IICplot_option = "separate",
+                         plot_option_ICC_IIC = "separate",
                          max_plots_panel = 9,
                          ncol_panel = 3,
                          overlay_style = "color",
@@ -217,18 +209,18 @@ BayesIRTplot <- function(blavaanobj,
   if (ICC == 1){
 
     ## options to plot 1) each item separately 2) each item separately in a panel 3) overlay in the same plot
-    ICCplot_option <- toupper(ICCplot_option)
+    plot_option_ICC_IIC <- toupper(plot_option_ICC_IIC)
 
     # set up dummy variables to indicate which type of plot is requested
     # set dummy variable to 1 if the plot is requested
-    if ("ALL" %in% ICCplot_option) {
+    if ("ALL" %in% plot_option_ICC_IIC) {
       ICC_separate <- 1
       ICC_panel <- 1
       ICC_overlay <- 1
     } else {
-      ICC_separate <- as.integer("SEPARATE" %in% ICCplot_option)
-      ICC_panel <- as.integer("PANEL" %in% ICCplot_option)
-      ICC_overlay <- as.integer("OVERLAY" %in% ICCplot_option)
+      ICC_separate <- as.integer("SEPARATE" %in% plot_option_ICC_IIC)
+      ICC_panel <- as.integer("PANEL" %in% plot_option_ICC_IIC)
+      ICC_overlay <- as.integer("OVERLAY" %in% plot_option_ICC_IIC)
     }
 
     # plot each item separately
@@ -323,7 +315,7 @@ BayesIRTplot <- function(blavaanobj,
 
       if (toupper(overlay_style) == "LINE" &&
           length(item_list_ICC_IIC) > 13) {
-        stop("A maximum of 13 items can be plotted in an overlaid plot. Consider ICCplot_option = 'panel' or 'separate', or use overlay_style = 'color'")
+        stop("A maximum of 13 items can be plotted in an overlaid plot. Consider plot_option_ICC_IIC = 'panel' or 'separate', or use overlay_style = 'color'")
       }
 
       # item names
@@ -386,18 +378,18 @@ BayesIRTplot <- function(blavaanobj,
   if (IIC == 1){
 
     ## options to plot 1) each item separately 2) each item separately in a panel 3) overlay in the same plot
-    IICplot_option <- toupper(IICplot_option)
+    plot_option_ICC_IIC <- toupper(plot_option_ICC_IIC)
 
     # set up dummy variables to indicate which type of plot is requested
     # set dummy variable to 1 if the plot is requested
-    if ("ALL" %in% IICplot_option) {
+    if ("ALL" %in% plot_option_ICC_IIC) {
       IIC_separate <- 1
       IIC_panel <- 1
       IIC_overlay <- 1
     } else {
-      IIC_separate <- as.integer("SEPARATE" %in% IICplot_option)
-      IIC_panel <- as.integer("PANEL" %in% IICplot_option)
-      IIC_overlay <- as.integer("OVERLAY" %in% IICplot_option)
+      IIC_separate <- as.integer("SEPARATE" %in% plot_option_ICC_IIC)
+      IIC_panel <- as.integer("PANEL" %in% plot_option_ICC_IIC)
+      IIC_overlay <- as.integer("OVERLAY" %in% plot_option_ICC_IIC)
     }
 
     # plot each item separately
@@ -492,7 +484,7 @@ BayesIRTplot <- function(blavaanobj,
 
       if (toupper(overlay_style) == "LINE" &&
           length(item_list_ICC_IIC) > 13) {
-        stop("A maximum of 13 items can be plotted in an overlaid plot. Consider IICplot_option = 'panel' or 'separate', or use overlay_style = 'color'")
+        stop("A maximum of 13 items can be plotted in an overlaid plot. Consider plot_option_ICC_IIC = 'panel' or 'separate', or use overlay_style = 'color'")
       }
 
       # item names
