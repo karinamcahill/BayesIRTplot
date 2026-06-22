@@ -239,7 +239,7 @@ BayesIRTplot <- function(blavaanobj,
           scale_colour_grey() +
           labs(title = title_text,
                subtitle = paste(DrawsK, "draws are plotted"),
-               x = "\u03B8",
+               x = expression(theta),
                y = expression(italic(p)(y == 1))) +
           geom_line(data = subset(summary_by_item_theta, itemnum == item_plot),
                     aes(x = theta, y = p), colour = "black", linetype = "solid", linewidth = 2) +
@@ -297,7 +297,7 @@ BayesIRTplot <- function(blavaanobj,
           labs(
             title = "Item Characteristic Curve",
             subtitle = paste(DrawsK, "draws are plotted"),
-            x = "\u03B8",
+            x = expression(theta),
             y = expression(italic(p)(y == 1))
           ) +
           theme_classic() +
@@ -338,7 +338,7 @@ BayesIRTplot <- function(blavaanobj,
             linewidth = 1, alpha = 0.8) +
           labs(title = "Item Characteristic Curve",
                colour = "Item",
-               x = "\u03B8",
+               x = expression(theta),
                y = expression(italic(p)(y==1))) +
           theme_classic() +
           theme(text = element_text(family = "serif", size = 12)) +
@@ -358,7 +358,7 @@ BayesIRTplot <- function(blavaanobj,
             linewidth = 1) +
           labs(title = "Item Characteristic Curve",
                linetype = "Item",
-               x = "\u03B8",
+               x = expression(theta),
                y = expression(italic(p)(y==1))) +
           theme_classic() +
           theme(text = element_text(family = "serif", size = 12)) +
@@ -409,7 +409,7 @@ BayesIRTplot <- function(blavaanobj,
           scale_colour_grey() +
           labs(title = title_text,
                subtitle = paste(DrawsK, "draws are plotted"),
-               x = "\u03B8",
+               x = expression(theta),
                y = "Information") +
           geom_line(data = subset(summary_by_item_theta, itemnum == item_plot),
                     aes(x = theta, y = i), colour = "black", linetype = "solid", linewidth = 2) +
@@ -467,7 +467,7 @@ BayesIRTplot <- function(blavaanobj,
           labs(
             title = "Item Information Curve",
             subtitle = paste(DrawsK, "draws are plotted"),
-            x = "\u03B8",
+            x = expression(theta),
             y = "Information") +
           theme_classic() +
           theme(legend.position = "none", text = element_text(family = "serif", size = 12)) +
@@ -507,7 +507,7 @@ BayesIRTplot <- function(blavaanobj,
             linewidth = 1, alpha = 0.8) +
           labs(title = "Item Information Curve",
                colour = "Item",
-               x = "\u03B8",
+               x = expression(theta),
                y = "Information") +
           theme_classic() +
           theme(text = element_text(family = "serif", size = 12)) +
@@ -527,7 +527,7 @@ BayesIRTplot <- function(blavaanobj,
             linewidth = 1) +
           labs(title = "Item Information Curve",
                linetype = "Item",
-               x = "\u03B8",
+               x = expression(theta),
                y = "Information") +
           theme_classic() +
           theme(text = element_text(family = "serif", size = 12)) +
@@ -555,7 +555,7 @@ BayesIRTplot <- function(blavaanobj,
       scale_colour_grey() +
       labs(title = "Test Characteristic Curve",
            subtitle = paste(DrawsK, "draws are plotted"),
-           x = "\u03B8",
+           x = expression(theta),
            y = "Expected Score") +
       geom_line(data = summary_by_theta, aes(x = theta, y = test_p), colour = "black", linetype = "solid", linewidth = 2) +
       theme_classic() +
@@ -579,7 +579,7 @@ BayesIRTplot <- function(blavaanobj,
       scale_colour_grey() +
       labs(title = "Test Information Curve",
            subtitle = paste(DrawsK, "draws are plotted"),
-           x = "\u03B8",
+           x = expression(theta),
            y = "Information") +
       geom_line(data = summary_by_theta, aes(x = theta, y = test_i), colour = "black", linetype = "solid", linewidth = 2) +
       theme_classic() +
