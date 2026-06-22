@@ -51,16 +51,16 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot = "ICC", items_ICC_IIC = c(1, 4, 6),
 # panel ICC
 # specify a maximum of 4 items and 2 columns in a panel
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = "ICC", items_ICC_IIC = c(1:8), 
-             ICCplot_option = "panel", max_plots_panel = 4, ncol_panel = 2) 
+             plot_option_ICC_IIC = "panel", max_plots_panel = 4, ncol_panel = 2) 
 
 # overlaid ICC
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = "ICC", items_ICC_IIC = c(1,2,3), 
-             ICCplot_option = "overlay") 
+             plot_option_ICC_IIC = "overlay") 
 
 # overlaid ICC by line types (instead of colors) for different items
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = "ICC", items_ICC_IIC = c(1,2,3), 
              item_names_ICC_IIC = c("ItemName1", "ItemName2", "ItemName3"), 
-             ICCplot_option = "overlay", overlay_style = "line") 
+             plot_option_ICC_IIC = "overlay", overlay_style = "line") 
 ```
 
 ## Item Information Curve
@@ -68,7 +68,7 @@ In IIC, each grey line shows the item information in one posterior draw, while t
 ```{r}
 # panel IIC
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = "IIC", items_ICC_IIC = c(1, 3, 5, 6, 10, 12), 
-             IICplot_option = "panel") 
+             plot_option_ICC_IIC = "panel") 
 ```
 
 ## Test Characteristic Curve
@@ -102,9 +102,9 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot = "TIC", DrawsK = 1000)
 ### Create multiple types of plots
 Multiple types of plots can be requested at the same time.
 ```{r}
-# request ICC as separate plots (by default) and IIC in a panel
-BayesIRTplot(tma.IRT.fitted.model, IRTplot = c("ICC", "IIC"), items_ICC_IIC = c(5,6,8), 
-             IICplot_option = "panel")
+# request ICC in a panel and TIC
+BayesIRTplot(tma.IRT.fitted.model, IRTplot = c("ICC", "TIC"), items_ICC_IIC = c(5,6,8), 
+             plot_option_ICC_IIC = "panel")
 ```
 
 ### Save plots to local directory
