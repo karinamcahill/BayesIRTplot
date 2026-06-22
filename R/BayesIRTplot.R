@@ -238,7 +238,6 @@ BayesIRTplot <- function(blavaanobj,
           geom_line(alpha = 0.4) +
           scale_colour_grey() +
           labs(title = title_text,
-               subtitle = paste(DrawsK, "draws are plotted"),
                x = expression(theta),
                y = expression(italic(p)(y == 1))) +
           geom_line(data = subset(summary_by_item_theta, itemnum == item_plot),
@@ -296,7 +295,6 @@ BayesIRTplot <- function(blavaanobj,
           facet_wrap(~ item_label, ncol = ncol_panel) +
           labs(
             title = "Item Characteristic Curve",
-            subtitle = paste(DrawsK, "draws are plotted"),
             x = expression(theta),
             y = expression(italic(p)(y == 1))
           ) +
@@ -408,7 +406,6 @@ BayesIRTplot <- function(blavaanobj,
           geom_line(alpha = 0.4) +
           scale_colour_grey() +
           labs(title = title_text,
-               subtitle = paste(DrawsK, "draws are plotted"),
                x = expression(theta),
                y = "Information") +
           geom_line(data = subset(summary_by_item_theta, itemnum == item_plot),
@@ -466,7 +463,6 @@ BayesIRTplot <- function(blavaanobj,
           facet_wrap(~ item_label, ncol = ncol_panel) +
           labs(
             title = "Item Information Curve",
-            subtitle = paste(DrawsK, "draws are plotted"),
             x = expression(theta),
             y = "Information") +
           theme_classic() +
@@ -554,7 +550,6 @@ BayesIRTplot <- function(blavaanobj,
       geom_line(alpha = 0.4)  +
       scale_colour_grey() +
       labs(title = "Test Characteristic Curve",
-           subtitle = paste(DrawsK, "draws are plotted"),
            x = expression(theta),
            y = "Expected Score") +
       geom_line(data = summary_by_theta, aes(x = theta, y = test_p), colour = "black", linetype = "solid", linewidth = 2) +
@@ -578,7 +573,6 @@ BayesIRTplot <- function(blavaanobj,
       geom_line(alpha = 0.4)  +
       scale_colour_grey() +
       labs(title = "Test Information Curve",
-           subtitle = paste(DrawsK, "draws are plotted"),
            x = expression(theta),
            y = "Information") +
       geom_line(data = summary_by_theta, aes(x = theta, y = test_i), colour = "black", linetype = "solid", linewidth = 2) +
