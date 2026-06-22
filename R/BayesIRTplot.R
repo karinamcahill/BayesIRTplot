@@ -92,7 +92,11 @@ BayesIRTplot <- function(blavaanobj,
   # number of draws
   ndraws <- nrow(summary_by_draw)
   if (DrawsK > ndraws) {
-    stop("number of draws to be plotted should be lower than the total number of draws")
+    warning (paste0(
+      "DrawsK (", DrawsK,
+      ") exceeds the number of available posterior draws (", ndraws,
+      "). All available draws will be used."
+    ))
   }
 
   # number of items
