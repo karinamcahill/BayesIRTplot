@@ -6,28 +6,28 @@
 #'
 #' @param blavaanobj A fitted IRT model from `blavaan`.
 #'
-#' @returns A list of model information, datasets, and summary statistics used for plotting.
+#' @returns A list of model information, summary data, and summary statistics used for plotting.
 #' \describe{
 #'   \item{nitems}{
 #'   Number of items in the fitted model.
 #'   }
 #'   \item{draws_by_item_theta}{
-#'   Posterior draws of item discrimination (`a`) and item threshold (`tau`) parameters, calculated probabilities of a correct response (`p`) and item information (`i`) across theta values.
+#'   Posterior draws of item discrimination (`a`) and item threshold (`tau`) estimates, calculated probabilities of a correct response (`p`) and item information (`i`) across theta values.
 #'
-#'   The IRT models fitted in blavaan are on probit scale. Item discrimination estimates are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
+#'   The IRT models fitted in `blavaan` are on probit scale. Item discrimination estimates are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
 #'   Item threshold estimates remain on the probit scale.
 #'   }
 #'   \item{summary_by_item}{
-#'   Summary of item threshold estimates across posterior draws (mean, Q1, median, Q3, minimum, maximum).
+#'   Summary of item threshold (`tau`) estimates across posterior draws (mean, Q1, median, Q3, minimum, maximum).
 #'   }
 #'   \item{summary_by_item_theta}{
 #'   Mean probabilities of a correct response (`p`) and mean item information (`i`) across posterior draws, by item and theta.
 #'   }
 #'   \item{summary_by_draw_theta}{
-#'   Test expected scores (`test_p`) and test information (`test_i`), by posterior draw and theta.
+#'   Expected test scores (`test_p`) and test information (`test_i`), by posterior draw and theta.
 #'   }
 #'   \item{summary_by_theta}{
-#'   Mean test expected scores (`test_p`) and mean test information (`test_i`) across posterior draws, by theta.
+#'   Mean expected test scores (`test_p`) and mean test information (`test_i`) across posterior draws, by theta.
 #'   }
 #'   \item{summary_by_draw}{
 #'   Marginal reliability for each posterior draw. Reliability is calculated at each theta value, then averaged across theta values using standard normal distribution density weights.
