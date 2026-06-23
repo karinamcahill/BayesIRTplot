@@ -319,7 +319,7 @@ BayesIRTplot <- function(blavaanobj,
 
       if (toupper(overlay_style) == "LINE" &&
           length(item_list_ICC_IIC) > 13) {
-        stop("A maximum of 13 items can be plotted in an overlaid plot. Consider plot_option_ICC_IIC = 'panel' or 'separate', or use overlay_style = 'color'. Advanced users may also modify the function source code available on GitHub to support additional line types.")
+        stop("A maximum of 13 line types can be plotted in an overlaid plot. Consider plot_option_ICC_IIC = 'panel' or 'separate', or overlay_style = 'color'. Advanced users may also modify the function source code available on GitHub to support additional line types.")
       }
 
       # item names
@@ -486,7 +486,7 @@ BayesIRTplot <- function(blavaanobj,
 
       if (toupper(overlay_style) == "LINE" &&
           length(item_list_ICC_IIC) > 13) {
-        stop("A maximum of 13 items can be plotted in an overlaid plot. Consider plot_option_ICC_IIC = 'panel' or 'separate', or use overlay_style = 'color'. Advanced users may also modify the function source code available on GitHub to support additional line types.")
+        stop("A maximum of 13 line types can be plotted in an overlaid plot. Consider plot_option_ICC_IIC = 'panel' or 'separate', or overlay_style = 'color'. Advanced users may also modify the function source code available on GitHub to support additional line types.")
       }
 
       # item names
