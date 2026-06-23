@@ -587,11 +587,11 @@ BayesIRTplot <- function(blavaanobj,
 
     RELplot <- ggplot(summary_by_draw, aes(x = rel)) +
       geom_histogram(
-        binwidth = 0.01,
+        bins = 30,
         fill = "grey40",
         color = "white"
       ) +
-      scale_x_continuous(breaks = seq(0, 1, by = .01), labels = scaleFUN) +
+      scale_x_continuous(labels = scaleFUN) +
       scale_y_continuous(expand = expansion(mult = c(0, 0.05))) +
       theme_classic() +
       theme(legend.position = "none") +
