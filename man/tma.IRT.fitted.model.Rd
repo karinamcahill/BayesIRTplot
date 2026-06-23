@@ -15,7 +15,7 @@ Item Response Warehouse:
 tma.IRT.fitted.model
 }
 \description{
-A fitted \code{blavaan} object from a two-parameter IRT model, included as
+A fitted \code{blavaan} object from a unidimensional two-parameter IRT model, included as
 example data for demonstrating \code{BayesIRTplot()}.
 }
 \details{
