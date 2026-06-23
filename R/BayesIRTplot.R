@@ -546,7 +546,7 @@ BayesIRTplot <- function(blavaanobj,
       scale_colour_grey() +
       labs(title = "Test Characteristic Curve",
            x = expression(theta),
-           y = "Expected Score") +
+           y = "Expected Test Score") +
       geom_line(data = summary_by_theta, aes(x = theta, y = test_p), colour = "black", linetype = "solid", linewidth = 2) +
       theme_classic() +
       theme(legend.position = "none", text = element_text(family = "serif", size = 12))
