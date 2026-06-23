@@ -12,7 +12,7 @@
 models fitted in `blavaan`. The current version supports unidimensional
 two-parameter IRT models. Available plots include Item-Person Map (IPM),
 Item Characteristic Curve (ICC), Item Information Curve (IIC), Test
-Characteristic Curve (TCC), Test Information Curve (TIC), and
+Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal
 Reliability Plot (REL).
 
 ## Installation

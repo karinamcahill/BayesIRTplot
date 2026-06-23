@@ -2,7 +2,7 @@
 #'
 #' Generate plots for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTplot()` reads in a fitted IRT model from `blavaan`.
 #' The current version supports unidimensional two-parameter IRT models. Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
-#' Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
+#' Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL).
 #'
 #' @param blavaanobj A fitted IRT model from `blavaan`.
 #' @param IRTplot Types of IRT plots to generate. Can be one or more of the following:
@@ -12,7 +12,7 @@
 #'   * IIC: Item Information Curve
 #'   * TCC: Test Characteristic Curve
 #'   * TIC: Test Information Curve
-#'   * REL: Reliability Plot
+#'   * REL: Marginal Reliability Plot
 #'   * ALL (default): All plots listed above
 #' @param DrawsK Controls the number of posterior draws plotted as separate lines in ICC, IIC, TCC and TIC. Default to 50.
 #'   The first `DrawsK` posterior draws are plotted (i.e., the draws are not randomly selected).
@@ -54,7 +54,7 @@
 #'   * IICplot_overlay: Item Information Curves overlaid
 #'   * TCCplot: Test Characteristic Curve
 #'   * TICplot: Test Information Curve
-#'   * RELplot: Reliability Plot
+#'   * RELplot: Marginal Reliability Plot
 #'
 #' @examples
 #' BayesIRTplot(tma.IRT.fitted.model)
@@ -608,7 +608,7 @@ BayesIRTplot <- function(blavaanobj,
       theme(legend.position = "none") +
       scale_colour_grey() +
       labs(title = "Marginal Reliability Plot",
-           x = "Reliability") +
+           x = "Marginal Reliability") +
       geom_vline(xintercept = mean_reliability, color = "black", linetype = "longdash", linewidth = 1) +
       theme(text = element_text(family = "serif", size = 12),
             axis.text.y = element_blank(),      #numbers
