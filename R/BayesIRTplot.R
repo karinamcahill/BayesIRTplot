@@ -15,7 +15,7 @@
 #'   * REL: Marginal Reliability Plot
 #'   * ALL (default): All plots listed above
 #' @param DrawsK Controls the number of posterior draws plotted as separate lines in ICC, IIC, TCC and TIC. Default to 50.
-#'   The first `DrawsK` posterior draws are plotted (i.e., the draws are not randomly selected).
+#'   The first `DrawsK` posterior draws are plotted (i.e., the posterior draws are not randomly selected).
 #'   If `DrawsK` exceeds the number of available posterior draws, all available posterior draws are plotted.
 #'   Note that in those plots, the mean probabilities or the mean information are calculated using all posterior draws from `blavaan` fitted object
 #'   regardless of how many posterior draws are plotted as separate lines. This option does not affect IPM and REL plots which always use all posterior draws.
@@ -91,16 +91,6 @@ BayesIRTplot <- function(blavaanobj,
   summary_by_draw <- data_list$summary_by_draw
   mean_reliability <- data_list$mean_reliability
 
-  # number of draws
-  ndraws <- nrow(summary_by_draw)
-  if (DrawsK > ndraws) {
-    warning (paste0(
-      "DrawsK (", DrawsK,
-      ") exceeds the number of available posterior draws (", ndraws,
-      "). All available posterior draws will be used."
-    ))
-  }
-
   # number of items
   nitems <- data_list$nitems
 
@@ -136,7 +126,6 @@ BayesIRTplot <- function(blavaanobj,
     labels[which(x == 0)] <- "0"
     gsub("(-?)0\\.", "\\1.", labels)
   }
-
 
   ################################
   ### * Item-Person Map Plot -----
@@ -620,6 +609,24 @@ BayesIRTplot <- function(blavaanobj,
     }
     plots$RELplot <- RELplot
   }
+
+  # number of draws
+  ndraws <- nrow(summary_by_draw)
+  # check the conditions where each draw is plotted as a separate line
+  separate_line_for_draws <-
+      (ICC == 1 && (ICC_separate == 1 || ICC_panel == 1)) ||
+      (IIC == 1 && (IIC_separate == 1 || IIC_panel == 1)) ||
+      TCC == 1 ||
+      TIC == 1
+
+  if (separate_line_for_draws && DrawsK > ndraws) {
+    warning (paste0(
+      "DrawsK (", DrawsK,
+      ") exceeds the number of available posterior draws (", ndraws,
+      "). All available posterior draws are plotted."
+    ))
+  }
+
 
   #### Save plots to local directory
   if (save_plots) {
