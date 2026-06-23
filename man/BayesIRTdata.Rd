@@ -10,28 +10,28 @@ BayesIRTdata(blavaanobj)
 \item{blavaanobj}{A fitted IRT model from \code{blavaan}.}
 }
 \value{
-A list of model information, datasets, and summary statistics used for plotting.
+A list of model information, summary data, and summary statistics used for plotting.
 \describe{
 \item{nitems}{
 Number of items in the fitted model.
 }
 \item{draws_by_item_theta}{
-Posterior draws of item discrimination (\code{a}) and item threshold (\code{tau}) parameters, calculated probabilities of a correct response (\code{p}) and item information (\code{i}) across theta values.
+Posterior draws of item discrimination (\code{a}) and item threshold (\code{tau}) estimates, calculated probabilities of a correct response (\code{p}) and item information (\code{i}) across theta values.
 
-The IRT models fitted in blavaan are on probit scale. Item discrimination estimates are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
+The IRT models fitted in \code{blavaan} are on probit scale. Item discrimination estimates are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
 Item threshold estimates remain on the probit scale.
 }
 \item{summary_by_item}{
-Summary of item threshold estimates across posterior draws (mean, Q1, median, Q3, minimum, maximum).
+Summary of item threshold (\code{tau}) estimates across posterior draws (mean, Q1, median, Q3, minimum, maximum).
 }
 \item{summary_by_item_theta}{
 Mean probabilities of a correct response (\code{p}) and mean item information (\code{i}) across posterior draws, by item and theta.
 }
 \item{summary_by_draw_theta}{
-Test expected scores (\code{test_p}) and test information (\code{test_i}), by posterior draw and theta.
+Expected test scores (\code{test_p}) and test information (\code{test_i}), by posterior draw and theta.
 }
 \item{summary_by_theta}{
-Mean test expected scores (\code{test_p}) and mean test information (\code{test_i}) across posterior draws, by theta.
+Mean expected test scores (\code{test_p}) and mean test information (\code{test_i}) across posterior draws, by theta.
 }
 \item{summary_by_draw}{
 Marginal reliability for each posterior draw. Reliability is calculated at each theta value, then averaged across theta values using standard normal distribution density weights.
@@ -45,7 +45,7 @@ then averaged across theta values using standard normal distribution density wei
 \description{
 Generate plotting data for Bayesian item response theory (IRT) models fitted in \code{blavaan}. \code{BayesIRTdata()} reads in a fitted IRT model from \code{blavaan}.
 The current version supports unidimensional two-parameter IRT models. The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
-Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
+Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL).
 }
 \examples{
 # access individual dataset

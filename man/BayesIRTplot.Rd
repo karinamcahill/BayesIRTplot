@@ -31,12 +31,12 @@ BayesIRTplot(
 \item IIC: Item Information Curve
 \item TCC: Test Characteristic Curve
 \item TIC: Test Information Curve
-\item REL: Reliability Plot
+\item REL: Marginal Reliability Plot
 \item ALL (default): All plots listed above
 }}
 
 \item{DrawsK}{Controls the number of posterior draws plotted as separate lines in ICC, IIC, TCC and TIC. Default to 50.
-The first \code{DrawsK} posterior draws are plotted (i.e., the draws are not randomly selected).
+The first \code{DrawsK} posterior draws are plotted (i.e., the posterior draws are not randomly selected).
 If \code{DrawsK} exceeds the number of available posterior draws, all available posterior draws are plotted.
 Note that in those plots, the mean probabilities or the mean information are calculated using all posterior draws from \code{blavaan} fitted object
 regardless of how many posterior draws are plotted as separate lines. This option does not affect IPM and REL plots which always use all posterior draws.}
@@ -91,13 +91,13 @@ Depending on the requested plots and plotting options, the list may contain:
 \item IICplot_overlay: Item Information Curves overlaid
 \item TCCplot: Test Characteristic Curve
 \item TICplot: Test Information Curve
-\item RELplot: Reliability Plot
+\item RELplot: Marginal Reliability Plot
 }
 }
 \description{
 Generate plots for Bayesian item response theory (IRT) models fitted in \code{blavaan}. \code{BayesIRTplot()} reads in a fitted IRT model from \code{blavaan}.
 The current version supports unidimensional two-parameter IRT models. Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
-Test Characteristic Curve (TCC), Test Information Curve (TIC), and Reliability Plot (REL).
+Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL).
 }
 \examples{
 BayesIRTplot(tma.IRT.fitted.model)
