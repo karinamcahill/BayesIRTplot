@@ -1,6 +1,6 @@
 #' Example `blavaan` fitted object
 #'
-#' A fitted `blavaan` object from a two-parameter IRT model, included as
+#' A fitted `blavaan` object from a unidimensional two-parameter IRT model, included as
 #' example data for demonstrating `BayesIRTplot()`.
 #'
 #' @format A fitted model object of class `blavaan`.
