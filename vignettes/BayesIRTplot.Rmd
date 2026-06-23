@@ -91,11 +91,11 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot="REL")
 
 ## Other plotting features
 
-### Number of draws plotted
-For ICC, IIC, TCC, TIC, by default, the first 50 draws will be plotted as separate lines. The number of draws plotted can be changed.
-Note that the mean probability and mean information are calculated using all posterior draws from `blavaan` fitted object, regardless of how many draws are plotted as separate lines.
+### Number of posterior draws plotted
+For ICC, IIC, TCC and TIC, by default, the first 50 posterior draws will be plotted as separate lines. The number of posterior draws plotted can be changed.
+Note that the mean probability and mean information are calculated using all posterior draws from `blavaan` fitted object, regardless of how many posterior draws are plotted as separate lines.
 ```{r}
-# plot the first 1000 draws
+# plot the first 1000 posterior draws
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = "TIC", DrawsK = 1000) 
 ```
 
