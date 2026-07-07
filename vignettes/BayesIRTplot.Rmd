@@ -199,9 +199,11 @@ tma.IRT.fitted.model <- blavaan(
 )
 ```
 
-## Session information
+## Citation
+If you use `BayesIRTplot` in your work, please cite the package by using
+
 ```{r}
-sessionInfo()
+citation("BayesIRTplot")
 ```
 
 ## References
@@ -216,3 +218,7 @@ Statistical Computing, Vienna, Austria. doi:10.32614/R.manuals
 <https://doi.org/10.32614/R.manuals>. <https://www.R-project.org/>.
 
 
+## Session information
+```{r}
+sessionInfo()
+```
