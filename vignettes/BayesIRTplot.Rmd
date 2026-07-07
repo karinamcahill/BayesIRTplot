@@ -86,7 +86,7 @@ In TIC, each grey line shows the test information in one posterior draw, while t
 BayesIRTplot(tma.IRT.fitted.model, IRTplot="TIC")
 ```
 
-## Marginal Reliability plot
+## Marginal Reliability Plot
 Marginal reliability plot is a histogram of marginal reliability in each posterior draw. The mean marginal reliability based on all posterior draws is indicated by the dashed vertical line and can be printed using `BayesIRTdata()`.
 ```{r}
 BayesIRTplot(tma.IRT.fitted.model, IRTplot="REL") 
