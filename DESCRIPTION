@@ -1,8 +1,8 @@
 Package: BayesIRTplot
-Title: Generate Plots for Bayesian Item Response Theory Models
+Title: Data visualization for Bayesian Item Response Theory Models
 Version: 0.1.0.9000
 Authors@R: c(
-    person("Karina", "Cahill", email = "karina.cahill@asu.edu", role = c("cre", "aut")),
+    person("Karina", "Cahill", email = "karina.cahill@nau.edu", role = c("cre", "aut")),
     person("Roy", "Levy", email = "Roy.Levy@asu.edu", role = c("aut")),
     person("Yadi", "Li", email = "yadili@asu.edu", role = c("aut"))
     )
@@ -32,3 +32,4 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://github.com/yadili134/BayesIRTplot
