@@ -24,6 +24,16 @@ You can install the development version of `BayesIRTplot` from GitHub:
 pak::pak("yadili134/BayesIRTplot")
 ```
 
+Alternatively, you can use `remotes`:
+
+``` r
+# install.packages("remotes")
+remotes::install_github(
+  "yadili134/BayesIRTplot",
+  build_vignettes = TRUE
+)
+```
+
 ## Example
 
 ``` r
