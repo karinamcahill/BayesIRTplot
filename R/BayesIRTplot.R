@@ -64,8 +64,7 @@
 #' plots$IPMplot
 #'
 #' @details
-#' ICC, IIC, TCC, and TIC are plotted over a latent trait
-#' (\eqn{\theta}) range of -6 to 6.
+#' ICC, IIC, TCC, and TIC are plotted over a latent trait (`theta`) range of -6 to 6.
 #'
 #'
 #' @export

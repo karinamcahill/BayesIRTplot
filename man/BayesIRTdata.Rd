@@ -10,7 +10,8 @@ BayesIRTdata(blavaanobj)
 \item{blavaanobj}{A fitted IRT model from \code{blavaan}.}
 }
 \value{
-A list of model information, summary data, and summary statistics used for plotting.
+A list of model information, summary data, and summary statistics used for plotting. The latent trait (\code{theta}) values
+are evaluated over a range of -6 to 6.
 \describe{
 \item{nitems}{
 Number of items in the fitted model.

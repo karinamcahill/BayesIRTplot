@@ -100,8 +100,7 @@ The current version supports unidimensional two-parameter IRT models. Available 
 Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL).
 }
 \details{
-ICC, IIC, TCC, and TIC are plotted over a latent trait
-(\eqn{\theta}) range of -6 to 6.
+ICC, IIC, TCC, and TIC are plotted over a latent trait (\code{theta}) range of -6 to 6.
 }
 \examples{
 BayesIRTplot(tma.IRT.fitted.model)
