@@ -42,8 +42,7 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot = "IPM")
 ## Item Characteristic Curve
 In ICC, each grey line shows the probabilities of a correct response in one posterior draw, while the black line shows the mean across all posterior draws.
 
-ICC is plotted over latent trait (\(\theta\)) range from -6 to 6 by default. 
-The same default \(\theta\) range is used for IIC, TCC, and TIC plots.
+ICC is plotted over a latent trait (`theta`) range of -6 to 6. The same `theta` range is used for IIC, TCC, and TIC plots.
 
 By default, all items will be plotted. We can specify a few items by providing a list of item numbers with item names (optional). ICC can be generated as separate plots for each item, several items in a panel, or several items overlaid in one plot.
 ```{r}
