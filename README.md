@@ -34,3 +34,11 @@ BayesIRTplot(tma.IRT.fitted.model)
 plots <- BayesIRTplot(tma.IRT.fitted.model, print_plots = FALSE)
 plots$IPMplot
 ```
+
+## Citation
+
+If you use `BayesIRTplot` in your research, please cite it using:
+
+``` r
+citation("BayesIRTplot")
+```
