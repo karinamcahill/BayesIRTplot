@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```
 
 # Overview 
-The `BayesIRTplot` package can be used to generate plots for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTplot()` reads in a fitted IRT model from `blavaan`. The current version supports unidimensional two-parameter IRT models. The following types of plots are available: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC), Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL). Here provides examples for the use of the package.
+The `BayesIRTplot` package can be used to generate plots for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTplot()` reads in a fitted IRT model from `blavaan`. The current version supports unidimensional two-parameter IRT models. The following types of plots are available: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC), Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL). This vignette provides examples for use of the `BayesIRTPlot` package.
 
 A fitted `blavaan` object (`tma.IRT.fitted.model`) is included in the package and it is used throughout the examples. Details on data source, data preparation and model fitting are provided at the end.
 
@@ -41,6 +41,9 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot = "IPM")
 
 ## Item Characteristic Curve
 In ICC, each grey line shows the probabilities of a correct response in one posterior draw, while the black line shows the mean across all posterior draws.
+
+ICC is plotted over latent trait (\(\theta\)) range from -6 to 6 by default. 
+The same default \(\theta\) range is used for IIC, TCC, and TIC plots.
 
 By default, all items will be plotted. We can specify a few items by providing a list of item numbers with item names (optional). ICC can be generated as separate plots for each item, several items in a panel, or several items overlaid in one plot.
 ```{r}
@@ -84,9 +87,13 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot="TIC")
 ```
 
 ## Marginal Reliability plot
-Marginal reliability plot is a histogram of marginal reliability in each posterior draw. The marginal reliability based on all posterior draws is indicated by the dashed vertical line.
+Marginal reliability plot is a histogram of marginal reliability in each posterior draw. The mean marginal reliability based on all posterior draws is indicated by the dashed vertical line and can be printed using `BayesIRTdata()`.
 ```{r}
 BayesIRTplot(tma.IRT.fitted.model, IRTplot="REL") 
+
+# mean marginal reliability based on all posterior draws
+data <- BayesIRTdata(tma.IRT.fitted.model)
+data$mean_reliability
 ```
 
 ## Other plotting features
@@ -100,7 +107,7 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot = "TIC", DrawsK = 1000)
 ```
 
 ### Create multiple types of plots
-Multiple types of plots can be requested at the same time.
+Multiple types of plots can be requested at the same time. By default, all types of plots are generated, the code below demonstrates how to specify selected types of plots.
 ```{r}
 # request ICC in a panel and TIC
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = c("ICC", "TIC"), items_ICC_IIC = c(5,6,8), 
@@ -134,14 +141,8 @@ datasets$summary_by_item
 The example fitted model uses the publicly available dataset "tma" from Item Response Warehouse, which can be accessed and downloaded from https://itemresponsewarehouse.org/data.html
 
 <br>
-Reference: 
+In this example, a Bayesian unidimensional two-parameter item response theory (IRT) model was fit in Stan via the R package `blavaan` in R (Merkle et al., 2021; R Core Team, 2026). Two chains were run for the Markov chain Monte Carlo (MCMC) algorithm, the first 500 iterations were specified as warm-up for each chain, and then 1,000 iterations from each chain after warm-up were obtained and saved. Default thinning by 1 was included in the model to keep every iteration. For model specification, the factor loadings on the latent factor were freely estimated, with one threshold for each item. Below is the code for data preparation and model fitting using `blavaan`.
 
-Taylor, J. A. (1953). A personality scale of manifest anxiety. *The Journal of Abnormal and Social Psychology, 48*(2), 285-290. https://doi.org/10.1037/h0056264 
-
-Datapages. (2026). *Item Response Warehouse* (Version 43.0), *tma* [Table]. Redivis (DOI:10.71778/V2DW-7A53). https://stanford.redivis.com/datasets/as2e-cv7jb41fd/tables/hd62-026kwagr9?v=43.0
-
-<br>
-Below are the code for data preparation and model fitting in blavaan.
 
 ```{r, eval = FALSE}
 # call the relevant libraries
@@ -198,6 +199,20 @@ tma.IRT.fitted.model <- blavaan(
 )
 ```
 
+## Session information
+```{r}
+sessionInfo()
+```
 
+## References
+Taylor, J. A. (1953). A personality scale of manifest anxiety. *The Journal of Abnormal and Social Psychology, 48*(2), 285-290. https://doi.org/10.1037/h0056264 
+
+Datapages. (2026). *Item Response Warehouse* (Version 43.0), *tma* [Table]. Redivis (DOI:10.71778/V2DW-7A53). https://stanford.redivis.com/datasets/as2e-cv7jb41fd/tables/hd62-026kwagr9?v=43.0
+
+Merkle, E. C., FitzSimmons, E., Uanhoro, J., & Goodrich, B. (2021). Efficient Bayesian Structural Equation Modeling in Stan. *Journal of Statistical Software, 100*(6), 1–22. https://doi.org/10.18637/jss.v100.i06
+
+R Core Team (2026). *R: A Language and Environment for Statistical Computing.* R Foundation for
+Statistical Computing, Vienna, Austria. doi:10.32614/R.manuals
+<https://doi.org/10.32614/R.manuals>. <https://www.R-project.org/>.
 
 
