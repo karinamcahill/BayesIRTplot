@@ -48,6 +48,6 @@ plots$IPMplot
 
 If you use `BayesIRTplot` in your research, please cite it using:
 
-```r
+```{r}
 citation("BayesIRTplot")
 ```

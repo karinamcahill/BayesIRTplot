@@ -41,4 +41,20 @@ If you use `BayesIRTplot` in your research, please cite it using:
 
 ``` r
 citation("BayesIRTplot")
+#> Warning in citation("BayesIRTplot"): could not determine year for
+#> 'BayesIRTplot' from package DESCRIPTION file
+#> To cite package 'BayesIRTplot' in publications use:
+#> 
+#>   Cahill K, Levy R, Li Y (????). _BayesIRTplot: Data visualization for
+#>   Bayesian Item Response Theory Models_. R package version 0.1.0.9000,
+#>   <https://github.com/yadili134/BayesIRTplot>.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {BayesIRTplot: Data visualization for Bayesian Item Response Theory Models},
+#>     author = {Karina Cahill and Roy Levy and Yadi Li},
+#>     note = {R package version 0.1.0.9000},
+#>     url = {https://github.com/yadili134/BayesIRTplot},
+#>   }
 ```
