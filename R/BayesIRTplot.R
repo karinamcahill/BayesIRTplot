@@ -25,7 +25,7 @@
 #' @param plot_option_ICC_IIC Types of ICC and IIC plots to generate. Can be one or more of the following:
 #'
 #'   * separate (default): each item in a separate plot
-#'   * panel: several items plotted in a panel
+#'   * panel: several items plotted in a panel (small multiples, faceted plot)
 #'   * overlay: several items overlaid in one plot
 #'
 #'   Note that in overlaid ICC and IIC plots, only the mean probabilities of a correct response or the mean item information across all posterior draws will be plotted (no separate lines for each posterior draw).
@@ -62,6 +62,11 @@
 #' # access individual plot
 #' plots <- BayesIRTplot(tma.IRT.fitted.model, print_plots = FALSE)
 #' plots$IPMplot
+#'
+#' @details
+#' ICC, IIC, TCC, and TIC are plotted over a latent trait
+#' (\eqn{\theta}) range of -6 to 6.
+#'
 #'
 #' @export
 BayesIRTplot <- function(blavaanobj,

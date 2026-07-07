@@ -50,7 +50,7 @@ regardless of how many posterior draws are plotted as separate lines. This optio
 \item{plot_option_ICC_IIC}{Types of ICC and IIC plots to generate. Can be one or more of the following:
 \itemize{
 \item separate (default): each item in a separate plot
-\item panel: several items plotted in a panel
+\item panel: several items plotted in a panel (small multiples, faceted plot)
 \item overlay: several items overlaid in one plot
 }
 
@@ -98,6 +98,10 @@ Depending on the requested plots and plotting options, the list may contain:
 Generate plots for Bayesian item response theory (IRT) models fitted in \code{blavaan}. \code{BayesIRTplot()} reads in a fitted IRT model from \code{blavaan}.
 The current version supports unidimensional two-parameter IRT models. Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
 Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL).
+}
+\details{
+ICC, IIC, TCC, and TIC are plotted over a latent trait
+(\eqn{\theta}) range of -6 to 6.
 }
 \examples{
 BayesIRTplot(tma.IRT.fitted.model)
