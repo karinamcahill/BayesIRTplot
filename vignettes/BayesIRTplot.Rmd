@@ -34,7 +34,7 @@ data("tma.IRT.fitted.model")
 ```
 
 ## Item-Person Map
-IPM shows the box plots of each item's threshold estimates, which summarize Q1, Q3, median, minimum and maximum of the item threshold estimates across all posterior draws.
+IPM shows the box plots of each item's threshold parameter, summarizing across all posterior draws using Q1, Q3, median, minimum and maximum.
 ```{r}
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = "IPM") 
 ```

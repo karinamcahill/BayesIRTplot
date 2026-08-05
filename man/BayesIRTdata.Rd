@@ -17,13 +17,13 @@ are evaluated over a range of -6 to 6.
 Number of items in the fitted model.
 }
 \item{draws_by_item_theta}{
-Posterior draws of item discrimination (\code{a}) and item threshold (\code{tau}) estimates, calculated probabilities of a correct response (\code{p}) and item information (\code{i}) across theta values.
+Posterior draws of item discrimination (\code{a}) and item threshold (\code{tau}) parameters, calculated probabilities of a correct response (\code{p}) and item information (\code{i}) across theta values.
 
-The IRT models fitted in \code{blavaan} are on probit scale. Item discrimination estimates are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
-Item threshold estimates remain on the probit scale.
+The IRT models fitted in \code{blavaan} are on probit scale. Item discrimination parameters are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
+Item threshold parameters remain on the probit scale.
 }
 \item{summary_by_item}{
-Summary of item threshold (\code{tau}) estimates across posterior draws (mean, Q1, median, Q3, minimum, maximum).
+Summary of item threshold (\code{tau}) parameters across posterior draws (mean, Q1, median, Q3, minimum, maximum).
 }
 \item{summary_by_item_theta}{
 Mean probabilities of a correct response (\code{p}) and mean item information (\code{i}) across posterior draws, by item and theta.

@@ -13,13 +13,13 @@
 #'   Number of items in the fitted model.
 #'   }
 #'   \item{draws_by_item_theta}{
-#'   Posterior draws of item discrimination (`a`) and item threshold (`tau`) estimates, calculated probabilities of a correct response (`p`) and item information (`i`) across theta values.
+#'   Posterior draws of item discrimination (`a`) and item threshold (`tau`) parameters, calculated probabilities of a correct response (`p`) and item information (`i`) across theta values.
 #'
-#'   The IRT models fitted in `blavaan` are on probit scale. Item discrimination estimates are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
-#'   Item threshold estimates remain on the probit scale.
+#'   The IRT models fitted in `blavaan` are on probit scale. Item discrimination parameters are converted to logit scale and are used to calculate the probabilities of a correct response and item information.
+#'   Item threshold parameters remain on the probit scale.
 #'   }
 #'   \item{summary_by_item}{
-#'   Summary of item threshold (`tau`) estimates across posterior draws (mean, Q1, median, Q3, minimum, maximum).
+#'   Summary of item threshold (`tau`) parameters across posterior draws (mean, Q1, median, Q3, minimum, maximum).
 #'   }
 #'   \item{summary_by_item_theta}{
 #'   Mean probabilities of a correct response (`p`) and mean item information (`i`) across posterior draws, by item and theta.
