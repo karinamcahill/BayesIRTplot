@@ -19,7 +19,7 @@
 #'   Item threshold parameters remain on the probit scale.
 #'   }
 #'   \item{summary_by_item}{
-#'   Summary of item threshold (`tau`) parameters across posterior draws (mean, Q1, median, Q3, minimum, maximum).
+#'   Summary of item threshold (`tau`) parameters across posterior draws. Statistics include mean, Q1, median, Q3, and the lower and upper whiskers (calculated as Q1 − 1.5 × IQR and Q3 + 1.5 × IQR, respectively).
 #'   }
 #'   \item{summary_by_item_theta}{
 #'   Mean probabilities of a correct response (`p`) and mean item information (`i`) across posterior draws, by item and theta.
@@ -73,7 +73,7 @@ BayesIRTdata <- function(blavaanobj)
   draws_df_sim <- as.data.frame(do.call(rbind, draws.sim.to.analyze))
 
   # keep only parameters used in the analysis
-  draws_df_sim<-draws_df_sim[, 1:tau_end]
+  draws_df_sim <- draws_df_sim[, 1:tau_end]
   # create a column for draws, from 1 to total number of draws
   draws_df_sim$draw <- 1:nrow(draws_df_sim)
 
