@@ -12,3 +12,21 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(BayesIRTplot)
 ```
+
+This article provides details on the parameterization of item response theory (IRT) models fitted in `blavaan`, and explains how those parameters are transformed and used for plotting in `BayesIRTplot`.
+
+IRT models are fitted in `blavaan` using the theta parameterization and a probit link (i.e., the normal-ogive model). For a unidimensional two-parameter IRT model, `blavaan` provides posterior draws of item discrimination (`a`) and item threshold (`tau`) parameters. `BayesIRTplot` applies the following transformations and calculations:
+
+1. Under the normal-ogive model, the probability of a correct response (`p`) is calculated as the probability that the underlying latent response exceeds the item threshold.
+2. Item discrimination (`a`) is converted from the probit to the logit metric using $$
+a_{\text{logit}} = 1.702a_{\text{probit}}
+$$ and is reported under the logit metric. 
+3. Item information (`i`) is calculated as $$
+i = a_{\text{logit}}^2 p(1-p)
+$$.
+4. Item threshold (`tau`) is not transformed and is reported under the original probit metric. 
+
+
+
+
+
