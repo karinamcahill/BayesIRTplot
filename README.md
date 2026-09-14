@@ -28,10 +28,7 @@ Alternatively, you can use `remotes`:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github(
-  "yadili134/BayesIRTplot",
-  build_vignettes = TRUE
-)
+remotes::install_github("yadili134/BayesIRTplot")
 ```
 
 ## Example
