@@ -29,7 +29,7 @@ where $\theta$ is the latent trait and $\Phi(\cdot)$ denotes the cumulative dist
 2. Item discrimination ($a$) is then converted from the probit to the logit metric using 
 <div style="margin-top: 0.4em;"></div>
 $$
-a_{\text{logit}} = 1.702*a_{\text{probit}}
+a_{\text{logit}} = 1.702a
 $$ and is reported under the logit metric. 
 3. Item information ($i$) is calculated as $$
 i = a_{\text{logit}}^2 p(1-p)
