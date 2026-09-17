@@ -1,7 +1,7 @@
 #' Generate plotting data for Bayesian item response theory models
 #'
 #' Generate plotting data for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTdata()` reads in a fitted IRT model from `blavaan`.
-#' The current version supports unidimensional two-parameter IRT models. The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
+#' The current version supports unidimensional two-parameter IRT models for binary items. The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
 #' Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL).
 #'
 #' @param blavaanobj A fitted IRT model from `blavaan`.

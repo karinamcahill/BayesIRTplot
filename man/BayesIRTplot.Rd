@@ -96,7 +96,7 @@ Depending on the requested plots and plotting options, the list may contain:
 }
 \description{
 Generate plots for Bayesian item response theory (IRT) models fitted in \code{blavaan}. \code{BayesIRTplot()} reads in a fitted IRT model from \code{blavaan}.
-The current version supports unidimensional two-parameter IRT models. Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
+The current version supports unidimensional two-parameter IRT models for binary items. Available plots include Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
 Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL).
 }
 \details{

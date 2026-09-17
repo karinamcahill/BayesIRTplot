@@ -45,7 +45,7 @@ then averaged across theta values using standard normal distribution density wei
 }
 \description{
 Generate plotting data for Bayesian item response theory (IRT) models fitted in \code{blavaan}. \code{BayesIRTdata()} reads in a fitted IRT model from \code{blavaan}.
-The current version supports unidimensional two-parameter IRT models. The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
+The current version supports unidimensional two-parameter IRT models for binary items. The generated datasets may be used for the following types of plots: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC),
 Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL).
 }
 \examples{
