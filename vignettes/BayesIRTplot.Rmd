@@ -201,7 +201,7 @@ tma.IRT.fitted.model <- blavaan(
 ## Citation
 If you use `BayesIRTplot` in your work, please cite the package by using
 
-```{r}
+```{r, eval = FALSE}
 citation("BayesIRTplot")
 ```
 
