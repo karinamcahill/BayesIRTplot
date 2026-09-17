@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 ```
 
 # Overview 
-The `BayesIRTplot` package can be used to generate plots for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTplot()` reads in a fitted IRT model from `blavaan`. The current version supports unidimensional two-parameter IRT models. The following types of plots are available: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC), Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL). This vignette provides examples for use of the `BayesIRTPlot` package.
+The `BayesIRTplot` package can be used to generate plots for Bayesian item response theory (IRT) models fitted in `blavaan`. `BayesIRTplot()` reads in a fitted IRT model from `blavaan`. The current version supports unidimensional two-parameter IRT models for binary items. The following types of plots are available: Item-Person Map (IPM), Item Characteristic Curve (ICC), Item Information Curve (IIC), Test Characteristic Curve (TCC), Test Information Curve (TIC), and Marginal Reliability Plot (REL). This vignette provides examples for use of the `BayesIRTPlot` package.
 
 A fitted `blavaan` object (`tma.IRT.fitted.model`) is included in the package and it is used throughout the examples. Details on data source, data preparation and model fitting are provided at the end.
 
@@ -34,7 +34,7 @@ data("tma.IRT.fitted.model")
 ```
 
 ## Item-Person Map
-IPM shows the box plots of each item's threshold parameter, summarizing across all posterior draws using Q1, Q3, median, and the lower and upper whiskers (calculated as Q1 − 1.5 × IQR and Q3 + 1.5 × IQR, respectively).
+IPM shows the box plots of each item's threshold ($\tau$) parameter, summarizing across all posterior draws using Q1, Q3, median, and the lower and upper whiskers (calculated as Q1 − 1.5 × IQR and Q3 + 1.5 × IQR, respectively).
 ```{r}
 BayesIRTplot(tma.IRT.fitted.model, IRTplot = "IPM") 
 ```
@@ -42,7 +42,7 @@ BayesIRTplot(tma.IRT.fitted.model, IRTplot = "IPM")
 ## Item Characteristic Curve
 In ICC, each grey line shows the probabilities of a correct response in one posterior draw, while the black line shows the mean across all posterior draws.
 
-ICC is plotted over a latent trait (`theta`) range of -6 to 6. The same `theta` range is used for IIC, TCC, and TIC plots.
+ICC is plotted over a latent trait ($\theta$) range of -6 to 6. The same $\theta$ range is used for IIC, TCC, and TIC plots.
 
 By default, all items will be plotted. We can specify a few items by providing a list of item numbers with item names (optional). ICC can be generated as separate plots for each item, several items in a panel, or several items overlaid in one plot.
 ```{r}
