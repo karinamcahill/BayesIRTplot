@@ -1,7 +1,7 @@
 Package: BayesIRTplot
 Title: Data visualization for Bayesian Item Response Theory Models
 Date: 2026
-Version: 0.1.0.9000
+Version: 0.1.0
 Authors@R: c(
     person("Karina", "Cahill", email = "karina.cahill@nau.edu", role = c("cre", "aut")),
     person("Roy", "Levy", email = "Roy.Levy@asu.edu", role = c("aut")),
