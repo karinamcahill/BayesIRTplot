@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/yadili134/BayesIRTplot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/yadili134/BayesIRTplot/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/BayesIRTplot/BayesIRTplot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/BayesIRTplot/BayesIRTplot/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `BayesIRTplot` generates plots for Bayesian item response theory (IRT)
@@ -21,14 +21,14 @@ You can install the development version of `BayesIRTplot` from GitHub:
 
 ``` r
 # install.packages("pak")
-pak::pak("yadili134/BayesIRTplot")
+pak::pak("BayesIRTplot/BayesIRTplot")
 ```
 
 Alternatively, you can use `remotes`:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("yadili134/BayesIRTplot")
+remotes::install_github("BayesIRTplot/BayesIRTplot")
 ```
 
 ## Example
@@ -45,5 +45,5 @@ plots$IPMplot
 ## Citation
 
 Cahill K, Levy R, Li Y (2026). *BayesIRTplot: Data visualization for
-Bayesian Item Response Theory Models.* R package version 0.1.0.9000,
-<https://github.com/yadili134/BayesIRTplot>.
+Bayesian Item Response Theory Models.* R package version 0.1.0,
+<https://github.com/BayesIRTplot/BayesIRTplot>.

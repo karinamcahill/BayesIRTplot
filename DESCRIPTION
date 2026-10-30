@@ -33,5 +33,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-URL: https://github.com/yadili134/BayesIRTplot
+URL: https://github.com/BayesIRTplot/BayesIRTplot
 Config/Needs/website: rmarkdown
