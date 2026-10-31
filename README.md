@@ -44,6 +44,6 @@ plots$IPMplot
 
 ## Citation
 
-Cahill K, Levy R, Li Y (2026). *BayesIRTplot: Data visualization for
+Cahill K, Li Y, Levy R (2026). *BayesIRTplot: Data visualization for
 Bayesian Item Response Theory Models.* R package version 0.1.0,
 <https://github.com/BayesIRTplot/BayesIRTplot>.
