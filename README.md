@@ -17,7 +17,7 @@ Curve (IIC), Test Characteristic Curve (TCC), Test Information Curve
 
 ## Installation
 
-You can install the development version of `BayesIRTplot` from GitHub:
+You can install `BayesIRTplot` from GitHub:
 
 ``` r
 # install.packages("pak")
